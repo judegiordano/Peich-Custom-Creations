@@ -18,9 +18,7 @@ export const AddToCart: React.FC<IAddToCart> = ({ product }: IAddToCart): JSX.El
 	return (
 		<div style={styles.root}>
 			<Tooltip TransitionComponent={Zoom} title={`add ${product.name} to cart`}>
-				<IconButton onClick={() =>{
-					addToCart(product);
-				}}>
+				<IconButton onClick={() => addToCart(product)}>
 					<AddShoppingCartIcon />
 				</IconButton>
 			</Tooltip>
