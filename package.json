@@ -8,10 +8,10 @@
   "description": "a base node.js ts project",
   "main": "build/Index.js",
   "scripts": {
-    "postinstall": "npm run build && npm run clientBuild",
-    "clientBuild": "cd views && npm run build",
-    "lint": "eslint --fix --ext .ts,.tsx .",
+	"clientBuild": "cd views && npm run build",
     "build": "tsc",
+	"postinstall": "npm run build && npm run clientBuild",
+    "lint": "eslint --fix --ext .ts,.tsx .",
     "prestart": "npm run build && npm run clientBuild",
     "watch": "tsc --watch",
     "start": "node ./build/Index.js"
