@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -47,7 +46,6 @@ export const CartItem: React.FC<ICartItem> = ({ product, quantity }: ICartItem):
 					</div> */}
 				</div>
 			</Card>
-
 		</div>
 	);
 };

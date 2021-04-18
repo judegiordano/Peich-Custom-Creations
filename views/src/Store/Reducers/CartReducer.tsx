@@ -8,19 +8,22 @@ export interface IAction {
 	}
 }
 
-let cart: IProduct[] = [];
+let cart: IProduct[] = JSON.parse(localStorage.getItem("cart") as string) || [];
 
 export const cartReducer = (state = cart, action: IAction): IProduct[] => {
 	if (action.type === types.ADD) {
 		cart.push(action.payload.product);
+		localStorage.setItem("cart", JSON.stringify(cart));
 		return cart;
 	}
 	else if (action.type === types.REMOVE) {
 		cart.filter(item => item != action.payload.product);
+		localStorage.setItem("cart", JSON.stringify(cart));
 		return cart;
 	}
 	else if (action.type === types.CLEAR) {
-		cart = [{} as IProduct];
+		cart = [];
+		localStorage.removeItem("cart");
 		return cart;
 	}
 	else {
