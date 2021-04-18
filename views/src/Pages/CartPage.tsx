@@ -9,6 +9,7 @@ import { CartItem } from "../Components/Cart/CartItem";
 import { AppButton } from "../Components/AppButton";
 import { useCart } from "../Hooks/useCart";
 import { IProduct } from "../Types/Abstract";
+import { ConfirmClearCart } from "../Components/Cart/ConfirmClearCart";
 
 interface IStyles {
 	[key: string]: React.CSSProperties
@@ -18,31 +19,18 @@ interface ICart {
 	styleProp?: IStyles
 }
 
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Button from "@material-ui/core/Button";
-
 export const CartPage: React.FC<ICart> = ({ styleProp }: ICart): JSX.Element => {
 
 	const { clearCart } = useCart();
 	const [cartState, setCartState] = useState({ cart: [{} as IProduct] });
+	const [open, setOpen] = useState(false);
 
-	const [open, setOpen] = React.useState(false);
-	const handleClickOpen = () => {
-		setOpen(true);
-	};
-	const handleClose = () => {
-		setOpen(false);
-	};
+	// clear cart confirm functions
+	const handleOpen = () => setOpen(true);
+	const handleClose = () => setOpen(false);
 	const handleOk = () => {
 		clearCart();
 		setCartState(GetCart());
-		handleClickOpen();
-	};
-	const handleCancel = () => {
 		handleClose();
 	};
 
@@ -66,39 +54,18 @@ export const CartPage: React.FC<ICart> = ({ styleProp }: ICart): JSX.Element => 
 			</div>
 		) : (
 			<div style={{ ...styles.root, ...styleProp }}>
-				<AppButton text="clear cart" onClick={() => {
-					handleClickOpen();
-					// clearCart();
-					// setCartState(GetCart());
-				}} />
+				<AppButton text="clear cart" onClick={() => handleOpen()} />
 				{
 					cartState.cart.map(item => (
 						<CartItem key={item.id} quantity={1} product={item} />
 					))
 				}
-				<Dialog
+				<ConfirmClearCart
+					handleCancel={handleClose}
+					handleOk={handleOk}
+					handleClose={handleClose}
 					open={open}
-					onClose={handleClose}
-					aria-labelledby="alert-dialog-title"
-					aria-describedby="alert-dialog-description"
-					style={{fontWeight: "bold"}}
-				>
-					<DialogTitle id="alert-dialog-title">{"Are you sure you want to clear your cart?"}</DialogTitle>
-					<DialogContent>
-						<DialogContentText style={{fontWeight: "bold"}} id="alert-dialog-description">
-							Click OK to continue or click CANCEL to keep your cart
-						</DialogContentText>
-					</DialogContent>
-					<DialogActions>
-						<Button onClick={handleCancel} color="primary">
-							CANCEL
-						</Button>
-						<Button onClick={handleOk} color="primary" autoFocus>
-							OK
-						</Button>
-					</DialogActions>
-				</Dialog>
-
+				/>
 			</div>
 		)
 	);
