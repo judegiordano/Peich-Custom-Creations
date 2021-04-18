@@ -8,7 +8,7 @@
   "description": "a base node.js ts project",
   "main": "build/Index.js",
   "scripts": {
-	"clientBuild": "cd views && npm run build",
+	"clientBuild": "cd views && npm i && npm run build",
     "build": "tsc",
 	"postinstall": "npm run build && npm run clientBuild",
     "lint": "eslint --fix --ext .ts,.tsx .",
