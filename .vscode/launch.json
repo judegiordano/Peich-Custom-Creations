@@ -1,0 +1,39 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "pwa-node",
+			"request": "launch",
+			"name": "DEV",
+			"outputCapture": "std",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"program": "${workspaceFolder}\\build\\Index.js",
+			"preLaunchTask": "tsc: compile",
+			"outFiles": [
+				"${workspaceFolder}/build/**/*.js"
+			],
+			"env": {
+				"NODE_ENV": "development"
+			}
+		},
+		{
+			"type": "pwa-node",
+			"request": "launch",
+			"name": "PROD",
+			"outputCapture": "std",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"program": "${workspaceFolder}\\build\\Index.js",
+			"preLaunchTask": "tsc: compile",
+			"outFiles": [
+				"${workspaceFolder}/build/**/*.js"
+			],
+			"env": {
+				"NODE_ENV": "production"
+			}
+		}
+	]
+}

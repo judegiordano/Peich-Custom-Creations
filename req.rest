@@ -1,0 +1,10 @@
+POSt http://127.0.0.1:4000/api/products/add
+
+###
+GET http://127.0.0.1:4000/api/products/2
+
+###
+POST http://127.0.0.1:4000/api/products/image/update/1
+
+###
+GET http://127.0.0.1:4000/api/products/image/2
