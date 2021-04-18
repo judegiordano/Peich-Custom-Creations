@@ -1,6 +1,10 @@
 {
   "name": "tsbase",
   "version": "1.0.0",
+  "engines": {
+    "node": ">=14.16.0 <15",
+    "npm": "~7.5.2"
+  },
   "description": "a base node.js ts project",
   "main": "build/Index.js",
   "scripts": {

@@ -1,6 +1,10 @@
 {
   "name": "react-ts",
   "version": "0.1.0",
+  "engines": {
+    "node": ">=14.16.0 <15",
+    "npm": "~7.5.2"
+  },
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.3",
