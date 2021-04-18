@@ -5,7 +5,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Zoom from "@material-ui/core/Zoom";
 
 import { IProduct, IStyles } from "../../../Types/Abstract";
-import { useSnack } from "../../../Hooks/useSnack";
+import { useCart } from "../../../Hooks/useCart";
 
 interface IAddToCart {
 	product: IProduct
@@ -13,12 +13,14 @@ interface IAddToCart {
 
 export const AddToCart: React.FC<IAddToCart> = ({ product }: IAddToCart): JSX.Element => {
 
-	const { snack } = useSnack();
+	const { addToCart } = useCart();
 
 	return (
 		<div style={styles.root}>
 			<Tooltip TransitionComponent={Zoom} title={`add ${product.name} to cart`}>
-				<IconButton onClick={snack(`added ${product.name} to cart`, "success")}>
+				<IconButton onClick={() =>{
+					addToCart(product);
+				}}>
 					<AddShoppingCartIcon />
 				</IconButton>
 			</Tooltip>

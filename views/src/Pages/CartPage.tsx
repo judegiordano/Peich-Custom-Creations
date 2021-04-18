@@ -1,4 +1,5 @@
 import React from "react";
+import { GetCart } from "../Store/Dispatchers/CartDispatchers";
 
 interface IStyles {
 	[key: string]: React.CSSProperties
@@ -9,6 +10,8 @@ interface ICart {
 }
 
 export const CartPage: React.FC<ICart> = ({ styleProp }: ICart): JSX.Element => {
+	console.log(GetCart());
+	
 	return (
 		<div style={{...styles.root, ...styleProp}}>
 			my cart
