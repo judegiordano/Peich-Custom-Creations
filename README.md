@@ -1,3 +1,1 @@
-# Typescript Node.js Base Project
-
-## Just used to get started
+# Peich Custom Creations React App
