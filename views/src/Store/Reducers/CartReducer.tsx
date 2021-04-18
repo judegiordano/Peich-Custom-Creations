@@ -1,5 +1,6 @@
 import { IProduct } from "../../Types/Abstract";
 import * as types from "../ActionTypes/Cart";
+import { clearCartStorage, getCartStorage, updateCartStorage } from "../Storage/CartStorage";
 
 export interface IAction {
 	type: string,
@@ -8,22 +9,22 @@ export interface IAction {
 	}
 }
 
-let cart: IProduct[] = JSON.parse(localStorage.getItem("cart") as string) || [];
+let cart: IProduct[] = getCartStorage() as IProduct[] || [];
 
 export const cartReducer = (state = cart, action: IAction): IProduct[] => {
 	if (action.type === types.ADD) {
 		cart.push(action.payload.product);
-		localStorage.setItem("cart", JSON.stringify(cart));
+		updateCartStorage(cart);
 		return cart;
 	}
 	else if (action.type === types.REMOVE) {
 		cart.filter(item => item != action.payload.product);
-		localStorage.setItem("cart", JSON.stringify(cart));
+		updateCartStorage(cart);
 		return cart;
 	}
 	else if (action.type === types.CLEAR) {
 		cart = [];
-		localStorage.removeItem("cart");
+		clearCartStorage();
 		return cart;
 	}
 	else {
