@@ -5,6 +5,8 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
+import ClearIcon from "@material-ui/icons/Clear";
+import CheckIcon from "@material-ui/icons/Check";
 
 interface IConfirmClearCart {
 	open: boolean,
@@ -34,8 +36,8 @@ export const ConfirmClearCart: React.FC<IConfirmClearCart> = ({
 				</DialogContentText>
 			</DialogContent>
 			<DialogActions>
-				<Button onClick={handleCancel} color="primary">CANCEL</Button>
-				<Button onClick={handleOk} color="primary" autoFocus>OK</Button>
+				<Button onClick={handleCancel} endIcon={<ClearIcon />} style={{color: "salmon"}}>CANCEL</Button>
+				<Button onClick={handleOk} endIcon={<CheckIcon />} color="primary" autoFocus>OK</Button>
 			</DialogActions>
 		</Dialog>
 	);
