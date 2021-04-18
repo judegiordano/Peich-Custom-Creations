@@ -2,7 +2,7 @@ import * as dotenv from "dotenv";
 import path from "path";
 import os from "os";
 
-import { Env, Host } from "../types/constants";
+import { Env, Host } from "../Types/Constants";
 
 dotenv.config();
 

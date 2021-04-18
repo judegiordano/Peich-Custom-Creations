@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
-import logger from "../services/logger";
-import config from "../helpers/config";
-import { Database } from "../types/Constants";
+
+import logger from "../Services/Logger";
+import config from "../Helpers/Config";
+import { Database } from "../Types/Constants";
 
 const connect = async (): Promise<void> => {
 	let connection: string | undefined;
