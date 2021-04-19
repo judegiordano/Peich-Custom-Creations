@@ -5,7 +5,9 @@ interface IStyles {
 	[key: string]: React.CSSProperties
 }
 
-interface IInput {
+interface IMultiLineInput {
+	rows?: number
+	maxlength?: number,
 	label?: string,
 	disabled?: boolean,
 	error?: boolean,
@@ -18,7 +20,9 @@ interface IInput {
 	onChange?: React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement> | undefined,
 }
 
-export const AppInput: React.FC<IInput> = ({ 
+export const MultiLineInput: React.FC<IMultiLineInput> = ({
+	rows = 4,
+	maxlength = 120,
 	styleProp,
 	type,
 	errorText,
@@ -29,7 +33,7 @@ export const AppInput: React.FC<IInput> = ({
 	placeholder = "placeholder...",
 	required,
 	onChange
-}: IInput): JSX.Element => {
+}: IMultiLineInput): JSX.Element => {
 	return (
 		<div style={{...styles.root, ...styleProp}}>
 			<TextField
@@ -46,6 +50,9 @@ export const AppInput: React.FC<IInput> = ({
 				autoComplete={autoComplete}
 				onChange={onChange}
 				required={required}
+				multiline
+				rows={rows}
+				inputProps={{ maxLength: maxlength }}
 			/>
 		</div>
 	);

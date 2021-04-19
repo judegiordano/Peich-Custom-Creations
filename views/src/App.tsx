@@ -5,7 +5,7 @@ import { Routes } from "./Routes";
 
 const App : React.FC = (): JSX.Element => {
 	return (
-		<SnackbarProvider maxSnack={4}>
+		<SnackbarProvider maxSnack={3}>
 			<div className="App" style={{
 				paddingTop: "60px"
 			}}>

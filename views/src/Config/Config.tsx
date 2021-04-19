@@ -1,5 +1,6 @@
 export const config = {
-	apibase: "/api/"
+	apibase: "/api/",
+	peichInsta: "https://www.instagram.com/peichcustomcreations/"
 };
 
 export const colors = {

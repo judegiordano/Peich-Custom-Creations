@@ -11,9 +11,11 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import HomeIcon from "@material-ui/icons/Home";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+import InstagramIcon from "@material-ui/icons/Instagram";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import MailIcon from "@material-ui/icons/Mail";
 
-import { colors } from "../../Config/Config";
+import { colors, config } from "../../Config/Config";
 
 interface IStyles {
 	[key: string]: React.CSSProperties
@@ -79,6 +81,22 @@ export const NavBar: React.FC<INavBar> = ({ styleProp }: INavBar): JSX.Element =
 						</ListItemIcon>
 						<ListItemText primary="cart" />
 					</ListItem>
+					<Divider />
+					<a style={styles.link} href={config.peichInsta} target="_blank" rel="noreferrer">
+						<ListItem button>
+							<ListItemIcon>
+								<InstagramIcon />
+							</ListItemIcon>
+							<ListItemText primary="instagram" />
+						</ListItem>
+					</a>
+					<Divider />
+					<ListItem button onClick={() => history.push("/contact")}>
+						<ListItemIcon>
+							<MailIcon />
+						</ListItemIcon>
+						<ListItemText primary="contact us" />
+					</ListItem>
 				</List>
 				<Divider />
 			</SwipeableDrawer>
@@ -90,5 +108,7 @@ const styles = {
 	root: {
 		margin: "auto",
 		textAlign: "center"
+	},
+	link: {
 	}
 } as IStyles;

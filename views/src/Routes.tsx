@@ -7,6 +7,7 @@ import { Error } from "./Pages/Error";
 import { ProductPage } from "./Pages/ProductPage";
 import { CartPage } from "./Pages/CartPage";
 import { NavBar } from "./Components/Navigation/NavBar";
+import { ContactPage } from "./Pages/ContactPage";
 
 export const Routes: React.FC = (): JSX.Element => {
 	return (
@@ -17,6 +18,7 @@ export const Routes: React.FC = (): JSX.Element => {
 					<Route path="/" exact component={AllProductsPage} />
 					<Route path="/item/:id" exact component={ProductPage} />
 					<Route path="/cart" exact component={CartPage} />
+					<Route path="/contact" exact component={ContactPage} />
 					<Route path="/error"  component={Error} />
 					<Route component={NotFound} />
 				</Switch>

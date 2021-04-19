@@ -15,3 +15,14 @@ code {
 .roboto {
 	font-family: 'Roboto', sans-serif;
 }
+
+a:hover {
+	color: #757575;
+}
+a:visited {
+	color: #757575;
+}
+a {
+	color: #757575;
+	text-decoration: none;
+}
