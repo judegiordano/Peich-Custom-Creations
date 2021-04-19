@@ -9,9 +9,8 @@
   "main": "build/Index.js",
   "scripts": {
     "lint": "eslint --fix --ext .ts,.tsx .",
-    "postinstall": "npm run build",
-    "build": "tsc && npm run clientBuild",
     "clientBuild": "cd views && npm i && npm run build",
+    "build": "tsc && npm run clientBuild",
     "prestart": "npm run build",
     "watch": "tsc --watch",
     "start": "node ./build/Index.js"
