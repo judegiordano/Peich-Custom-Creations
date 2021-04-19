@@ -11,7 +11,7 @@
     "lint": "eslint --fix --ext .ts,.tsx .",
     "clientBuild": "cd views && npm i && npm run build",
     "build": "tsc && npm run clientBuild",
-    "prestart": "npm run build",
+    "npm run start": "npm run build",
     "watch": "tsc --watch",
     "start": "node ./build/Index.js"
   },
