@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { Card, CardContent } from "@material-ui/core";
 import SendIcon from "@material-ui/icons/Send";
 
 import { AppButton } from "../Components/AppButton";
 import { AppInput } from "../Components/AppInput";
 import { MultiLineInput } from "../Components/MultiLineInput";
-import { client } from "../Api/Client";
 import { AppLoader } from "../Components/AppLoader";
+import { useContactForm } from "../Hooks/useContactForm";
 
 interface IStyles {
 	[key: string]: React.CSSProperties
@@ -18,39 +18,25 @@ interface IContactPage {
 
 export const ContactPage: React.FC<IContactPage> = ({ styleProp }: IContactPage): JSX.Element => {
 
-	const [error, setError] = useState({
-		ok: true,
-		message: ""
-	});
-
-	const [loading, setLoading] = useState(false);
-	
-	const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
-		try {
-			e.preventDefault();
-			setLoading(true);
-			const { data } = await client.post("/email");
-			setError({ok: true, message: ""});
-			console.log(data);
-			setLoading(false);
-		} catch (error) {
-			setLoading(false);
-			setError({ok: false, message: "internal error"});
-			console.log(error);
-		}
-	};
+	const { error, loading, contact, body, setBody } = useContactForm();
 
 	return (
 		<div style={{...styles.root, ...styleProp}}>
 			<Card>
 				<CardContent>
-					<form onSubmit={async (e) => await handleSubmit(e)}>
+					<form onSubmit={async (e) => await contact(e)}>
 						<AppInput
 							placeholder="your email..."
 							label="Email"
 							type="email"
 							disabled={loading}
 							required
+							onChange={e => {
+								setBody({
+									...body,
+									email: e.target.value
+								});
+							}}
 						/>
 						<AppInput
 							placeholder="your name..."
@@ -58,6 +44,12 @@ export const ContactPage: React.FC<IContactPage> = ({ styleProp }: IContactPage)
 							type="text"
 							disabled={loading}
 							required
+							onChange={e => {
+								setBody({
+									...body,
+									name: e.target.value
+								});
+							}}
 						/>
 						<MultiLineInput
 							placeholder="your message..."
@@ -65,6 +57,12 @@ export const ContactPage: React.FC<IContactPage> = ({ styleProp }: IContactPage)
 							maxlength={500}
 							disabled={loading}
 							required
+							onChange={e => {
+								setBody({
+									...body,
+									message: e.target.value
+								});
+							}}
 						/>
 						<AppButton
 							type="submit"
