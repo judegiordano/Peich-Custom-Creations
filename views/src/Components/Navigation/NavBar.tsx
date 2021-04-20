@@ -45,6 +45,11 @@ export const NavBar: React.FC<INavBar> = ({ styleProp }: INavBar): JSX.Element =
 		setOpen(open);
 	};
 
+	const route = (to: string) => {
+		history.push(to);
+		setOpen(false);
+	};
+
 	return (
 		<div style={{ ...styles.root, ...styleProp }}>
 			<AppBar position="fixed" style={{backgroundColor: colors.gray}}>
@@ -68,14 +73,16 @@ export const NavBar: React.FC<INavBar> = ({ styleProp }: INavBar): JSX.Element =
 			>
 				<Divider />
 				<List style={{width: 240}}>
-					<ListItem button onClick={() => history.push("/")}>
+
+					<ListItem button onClick={() => route("/")}>
 						<ListItemIcon>
 							<HomeIcon />
 						</ListItemIcon>
 						<ListItemText primary="home" />
 					</ListItem>
 					<Divider />
-					<ListItem button onClick={() => history.push("/cart")}>
+
+					<ListItem button onClick={() => route("/cart")}>
 						<ListItemIcon>
 							<ShoppingCartIcon />
 						</ListItemIcon>
@@ -91,7 +98,7 @@ export const NavBar: React.FC<INavBar> = ({ styleProp }: INavBar): JSX.Element =
 						</ListItem>
 					</a>
 					<Divider />
-					<ListItem button onClick={() => history.push("/contact")}>
+					<ListItem button onClick={() => route("/contact")}>
 						<ListItemIcon>
 							<MailIcon />
 						</ListItemIcon>
