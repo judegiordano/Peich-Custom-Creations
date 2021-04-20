@@ -58,7 +58,7 @@ export const CartPage: React.FC<ICart> = ({ styleProp }: ICart): JSX.Element => 
 			</div>
 		) : (
 			<div style={{ ...styles.root, ...styleProp }}>
-				<AppButton text="clear cart" onClick={() => handleOpen()} />
+				<AppButton styleProp={{...styles.clearButton as IStyles}} text="clear cart" onClick={() => handleOpen()} />
 				{
 					cartState.cart.map(item => (
 						<CartItem key={item.id} product={item} handleClear={() => handlClearOne(item)} />
@@ -81,5 +81,8 @@ const styles = {
 		margin: "auto",
 		paddingTop: "20px",
 		fontWeight: "normal"
+	},
+	clearButton: {
+		maxWidth: "500px", width: "auto", padding: "10px"
 	}
 } as IStyles;
