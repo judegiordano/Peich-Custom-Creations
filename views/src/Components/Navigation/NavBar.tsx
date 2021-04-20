@@ -82,7 +82,7 @@ export const NavBar: React.FC<INavBar> = ({ styleProp }: INavBar): JSX.Element =
 						<ListItemText primary="cart" />
 					</ListItem>
 					<Divider />
-					<a style={styles.link} href={config.peichInsta} target="_blank" rel="noreferrer">
+					<a style={styles.link} href={config.peich_insta} target="_blank" rel="noreferrer">
 						<ListItem button>
 							<ListItemIcon>
 								<InstagramIcon />

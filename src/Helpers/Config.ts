@@ -22,7 +22,8 @@ const config = {
 			pass: process.env.EMAIL_PASSWORD
 		}
 	} as ImailTransporter,
-	CLIENT_EMAIL: process.env.CLIENT_EMAIL
+	CLIENT_EMAIL: process.env.CLIENT_EMAIL || undefined,
+	CAPTCHA_SECRET_KEY: process.env.CAPTCHA_SECRET_KEY || undefined
 };
 
 if (config.CONNECTION_STRING == undefined) {
@@ -34,5 +35,7 @@ if (config.MAIL_TRANSPORTER.auth.pass == undefined || config.MAIL_TRANSPORTER.au
 if (config.CLIENT_EMAIL == undefined) {
 	throw new Error("CLIENT_EMAIL is undefined");
 }
-
+if (config.CAPTCHA_SECRET_KEY == undefined) {
+	throw new Error("CAPTCHA_SECRET_KEY is undefined");
+}
 export default config;

@@ -1,12 +1,14 @@
 import React from "react";
 import { Card, CardContent } from "@material-ui/core";
 import SendIcon from "@material-ui/icons/Send";
+import ReCAPTCHA from "react-google-recaptcha";
 
 import { AppButton } from "../Components/AppButton";
 import { AppInput } from "../Components/AppInput";
 import { MultiLineInput } from "../Components/MultiLineInput";
 import { AppLoader } from "../Components/AppLoader";
 import { useContactForm } from "../Hooks/useContactForm";
+import { config } from "../Config/Config";
 
 interface IStyles {
 	[key: string]: React.CSSProperties
@@ -18,13 +20,13 @@ interface IContactPage {
 
 export const ContactPage: React.FC<IContactPage> = ({ styleProp }: IContactPage): JSX.Element => {
 
-	const { error, loading, contact, body, setBody } = useContactForm();
+	const { error, loading, contact, body, setBody, reRef } = useContactForm();
 
 	return (
 		<div style={{...styles.root, ...styleProp}}>
 			<Card>
 				<CardContent>
-					<form onSubmit={async (e) => await contact(e)}>
+					<form onSubmit={(e) => contact(e)}>
 						<AppInput
 							placeholder="your email..."
 							label="Email"
@@ -82,6 +84,11 @@ export const ContactPage: React.FC<IContactPage> = ({ styleProp }: IContactPage)
 				</CardContent>
 			</Card>
 			<AppLoader visible={loading} />
+			<ReCAPTCHA
+				sitekey={config.client_key}
+				size="invisible"
+				ref={reRef as React.LegacyRef<ReCAPTCHA>}
+			/>
 		</div>
 	);
 };

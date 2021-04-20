@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
 import fs from "fs";
 
+import config from "../Helpers/Config";
+import Rest from "../Helpers/Rest";
+
 export default class Utility {
 
 	private static chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
@@ -71,6 +74,16 @@ export default class Utility {
 				return 1;
 			}
 			return increment[0]._doc.id + 1;
+		} catch (error) {
+			throw new Error(error);
+		}
+	}
+
+	public static async ValidateCaptcha(token: string): Promise<boolean> {
+		try {
+			const { CAPTCHA_SECRET_KEY } = config;
+			const response = await Rest.Post(`https://www.google.com/recaptcha/api/siteverify?secret=${CAPTCHA_SECRET_KEY}&response=${token}`);
+			return response.data.success as boolean;
 		} catch (error) {
 			throw new Error(error);
 		}

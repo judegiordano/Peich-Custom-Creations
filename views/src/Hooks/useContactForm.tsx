@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useHistory } from "react-router";
+import ReCAPTCHA from "react-google-recaptcha";
 
 import { client } from "../Api/Client";
 
@@ -16,11 +17,13 @@ interface IUseContactForm {
 		email: string;
 		name: string;
 		message: string;
-	}>>
+	}>>,
+	reRef: React.MutableRefObject<ReCAPTCHA | undefined>
 }
 
 export const useContactForm = (): IUseContactForm => {
 
+	const reRef = useRef<ReCAPTCHA>();
 	const history = useHistory();
 
 	const [error, setError] = useState({
@@ -36,11 +39,17 @@ export const useContactForm = (): IUseContactForm => {
 
 	const [loading, setLoading] = useState(false);
 	
-	const contact = async (e:React.FormEvent<HTMLFormElement>) => {
+	const contact = async (e: React.FormEvent<HTMLFormElement>) => {
 		try {
 			e.preventDefault();
+			const token = await reRef.current?.executeAsync();
+			reRef.current?.reset();
+
 			setLoading(true);
-			const { data } = await client.post("/util/contact", body);
+			const { data } = await client.post("/util/contact", {
+				...body,
+				token: token
+			});
 
 			if(data.ok) {
 				setError({ok: true, message: ""});
@@ -62,6 +71,7 @@ export const useContactForm = (): IUseContactForm => {
 		loading,
 		contact,
 		body,
-		setBody
+		setBody,
+		reRef
 	};
 };
