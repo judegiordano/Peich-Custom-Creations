@@ -54,7 +54,8 @@ export const AppInput: React.FC<IInput> = ({
 const styles = {
 	root: {
 		margin: "auto",
-		width: "400px",
+		width: "100%",
+		maxWidth: "400px",
 		textAlign: "center",
 		paddingTop: "15px",
 		paddingBottom: "15px"

@@ -46,7 +46,7 @@ export const AppButton: React.FC<IAppButton> = ({
 const styles = {
 	root: {
 		margin: "auto",
-		width: "200px",
+		width: "100%",
 		textAlign: "center",
 		paddingTop: "5px",
 		paddingBottom: "5px"

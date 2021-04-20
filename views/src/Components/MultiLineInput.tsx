@@ -61,7 +61,8 @@ export const MultiLineInput: React.FC<IMultiLineInput> = ({
 const styles = {
 	root: {
 		margin: "auto",
-		width: "400px",
+		width: "100%",
+		maxWidth: "400px",
 		textAlign: "center",
 		paddingTop: "15px",
 		paddingBottom: "15px"

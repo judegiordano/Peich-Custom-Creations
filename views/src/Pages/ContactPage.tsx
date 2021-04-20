@@ -98,7 +98,7 @@ const styles = {
 		fontWeight: "bold"
 	},
 	button: {
-		width: "400px"
+		maxWidth: "200px"
 	},
 	error: {
 		margin: "auto",
