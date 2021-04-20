@@ -47,7 +47,7 @@ export const CartItem: React.FC<ICartItem> = ({ product, handleClear }: ICartIte
 						<Typography style={{textAlign: "left", fontSize:"15px", width: "100%", float: "left"}} variant="subtitle1" color="textSecondary">
 							quantity: x{ product.quantity }
 							<Typography style={{display: "inline", float: "right"}}>
-								${ product.quantity * product.price }
+								${ Math.round((product.quantity * product.price) * 100) / 100 }
 							</Typography>
 						</Typography>
 					</CardContent>

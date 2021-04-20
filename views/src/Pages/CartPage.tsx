@@ -22,6 +22,7 @@ interface ICart {
 export const CartPage: React.FC<ICart> = ({ styleProp }: ICart): JSX.Element => {
 
 	const { clearCart, clearOne } = useCart();
+	const [cartTotal, setCartTotal] = useState(0);
 	const [cartState, setCartState] = useState({ cart: [{} as ICartProduct] });
 	const [open, setOpen] = useState(false);
 
@@ -37,9 +38,17 @@ export const CartPage: React.FC<ICart> = ({ styleProp }: ICart): JSX.Element => 
 		clearOne(product);
 		setCartState(GetCart());
 	};
+	const getCartTotal = () => {
+		let total = 0;
+		cartState.cart.forEach(item => {
+			total += Math.round((item.price * item.quantity) * 100) / 100;
+		});
+		return total;
+	};
 
 	useEffect(() => {
 		setCartState(GetCart());
+		setCartTotal(getCartTotal());
 	}, [cartState]);
 
 	return (
@@ -58,12 +67,23 @@ export const CartPage: React.FC<ICart> = ({ styleProp }: ICart): JSX.Element => 
 			</div>
 		) : (
 			<div style={{ ...styles.root, ...styleProp }}>
-				<AppButton styleProp={{...styles.clearButton as IStyles}} text="clear cart" onClick={() => handleOpen()} />
-				{
-					cartState.cart.map(item => (
-						<CartItem key={item.id} product={item} handleClear={() => handlClearOne(item)} />
-					))
-				}
+				<Card>
+					<CardContent>
+						<AppButton styleProp={{...styles.clearButton as IStyles}} text="clear cart" onClick={() => handleOpen()} />
+						{
+							cartState.cart.map(item => (
+								<CartItem key={item.id} product={item} handleClear={() => handlClearOne(item)} />
+							))
+						}
+						<Card style={{maxWidth: "500px", margin: "auto", marginTop: "10px"}}>
+							<CardContent>
+								<Typography style={{textAlign: "right", color: "gray"}}>
+									${ cartTotal }
+								</Typography>
+							</CardContent>
+						</Card>
+					</CardContent>
+				</Card>
 				<ConfirmClearCart
 					handleCancel={handleClose}
 					handleOk={handleOk}
@@ -80,7 +100,8 @@ const styles = {
 		textAlign: "center",
 		margin: "auto",
 		paddingTop: "20px",
-		fontWeight: "normal"
+		fontWeight: "normal",
+		maxWidth: "800px"
 	},
 	clearButton: {
 		maxWidth: "500px", width: "auto", padding: "10px"
