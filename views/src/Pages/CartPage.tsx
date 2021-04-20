@@ -41,7 +41,7 @@ export const CartPage: React.FC<ICart> = ({ styleProp }: ICart): JSX.Element => 
 	const getCartTotal = () => {
 		let total = 0;
 		cartState.cart.forEach(item => {
-			total += Math.round((item.price * item.quantity) * 100) / 100;
+			total += (item.price * item.quantity);
 		});
 		return total;
 	};
@@ -78,7 +78,7 @@ export const CartPage: React.FC<ICart> = ({ styleProp }: ICart): JSX.Element => 
 						<Card style={{maxWidth: "500px", margin: "auto", marginTop: "10px"}}>
 							<CardContent>
 								<Typography style={{textAlign: "right", color: "gray"}}>
-									${ cartTotal }
+									${ Math.round(cartTotal * 100) / 100 }
 								</Typography>
 							</CardContent>
 						</Card>
