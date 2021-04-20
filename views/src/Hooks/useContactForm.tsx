@@ -41,7 +41,7 @@ export const useContactForm = (): IUseContactForm => {
 			e.preventDefault();
 			setLoading(true);
 			const { data } = await client.post("/util/contact", body);
-			
+
 			if(data.ok) {
 				setError({ok: true, message: ""});
 				setLoading(false);
@@ -56,7 +56,6 @@ export const useContactForm = (): IUseContactForm => {
 			setLoading(false);
 		}
 	};
-
 
 	return {
 		error,

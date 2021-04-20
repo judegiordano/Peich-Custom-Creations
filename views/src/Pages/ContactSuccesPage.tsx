@@ -1,5 +1,7 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
+import CheckIcon from "@material-ui/icons/CheckCircleOutline";
+import { Card, CardContent, Typography } from "@material-ui/core";
 
 interface IStyles {
 	[key: string]: React.CSSProperties
@@ -20,7 +22,17 @@ export const ContactSuccesPage: React.FC<IContactSuccesPage> = ({ location }: IC
 			<Redirect to="/" />
 		) : (
 			<div style={{ ...styles.root }}>
-				thanks for your email { location.state.name }!
+				<Card style={styles.card}>
+					<CardContent style={{fontSize: "20px"}}>
+						<Typography>
+							Thanks for your email { location.state.name }!
+						</Typography>
+						<Typography>
+							We will reach out to you shortly!
+						</Typography>
+						<CheckIcon style={styles.icon} />
+					</CardContent>
+				</Card>
 			</div>
 		)
 	);
@@ -29,6 +41,17 @@ export const ContactSuccesPage: React.FC<IContactSuccesPage> = ({ location }: IC
 const styles = {
 	root: {
 		textAlign: "center",
-		margin: "auto"
+		margin: "auto",
+		padding: "10px"
+	},
+	icon: {
+		color: "lightgreen",
+		height: "70px",
+		width: "70px",
+		paddingTop: "20px"
+	},
+	card: {
+		margin: "auto",
+		maxWidth: "700px"
 	}
 } as IStyles;

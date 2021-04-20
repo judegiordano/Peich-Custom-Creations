@@ -8,6 +8,8 @@ const router = Router();
 router.post("/contact", async (req, res) => {
 	try {
 		const { email, name, message } = req.body;
+		if (!email || !name || !message) throw "missing body requirements";
+
 		const mail = await Mail.SendEmail({
 			to: config.CLIENT_EMAIL,
 			from: email,
