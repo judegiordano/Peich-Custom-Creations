@@ -17,3 +17,10 @@ export interface IProduct {
 	tags: string[]
 	added: Date
 }
+
+export interface ICartProduct {
+	id: number,
+	name: string,
+	price: number,
+	quantity: number
+}

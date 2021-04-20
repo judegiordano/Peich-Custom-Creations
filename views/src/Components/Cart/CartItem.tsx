@@ -1,49 +1,56 @@
-import React, { useState } from "react";
+import React from "react";
+import { useHistory } from "react-router";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-// import IconButton from "@material-ui/core/IconButton";
+import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
+import DeleteIcon from "@material-ui/icons/Delete";
 
-import { IProduct, IStyles } from "../../Types/Abstract";
+import { IStyles, ICartProduct } from "../../Types/Abstract";
+import { CardActionArea } from "@material-ui/core";
 
 interface ICartItem {
-	product: IProduct,
-	quantity: number
+	product: ICartProduct,
+	handleClear: React.MouseEventHandler<HTMLButtonElement> | undefined
 }
 
-export const CartItem: React.FC<ICartItem> = ({ product, quantity }: ICartItem): JSX.Element => {
+export const CartItem: React.FC<ICartItem> = ({ product, handleClear }: ICartItem): JSX.Element => {
 
-	const [itemCount, setItemCount] = useState(quantity);
+	const history = useHistory();
 
 	return (
 		<div style={{ ...styles.root }}>
 			<Card style={styles.cardRoot}>
-				<CardMedia
-					style={styles.cover}
-					image={`/api/products/image/${product.id}`}
-					title={product.name}
-				/>
+				<CardActionArea style={styles.cardActionArea} onClick={() => history.push(`/item/${product.id}`)}>
+					<CardMedia
+						style={styles.cover}
+						image={`/api/products/image/${product.id}`}
+						title={product.name}
+					/>
+				</CardActionArea>
 				<div style={styles.details}>
 					<CardContent style={styles.content}>
-						<Typography component="h5" variant="h5">
+						<Typography style={{display: "inline", float: "left", fontSize: "15px"}} component="h6" variant="h6">
 							{ product.name }
+							<Typography style={{display: "inline", fontSize:"10px", paddingLeft: "5px", opacity: ".5"}}>
+								${ product.price }
+							</Typography>
 						</Typography>
-						<Typography style={{fontWeight: "bold", textAlign: "left"}} variant="subtitle1" color="textSecondary">
-							quantity: X{ itemCount }
+						<IconButton
+							style={{padding: 0, display: "inline", float: "right", paddingTop: "5px"}}
+							aria-label="previous"
+							onClick={handleClear}
+						>
+							<DeleteIcon style={styles.deleteIcon} />
+						</IconButton>
+						<Typography style={{textAlign: "left", fontSize:"15px", width: "100%", float: "left"}} variant="subtitle1" color="textSecondary">
+							quantity: x{ product.quantity }
+							<Typography style={{display: "inline", float: "right"}}>
+								${ product.quantity * product.price }
+							</Typography>
 						</Typography>
 					</CardContent>
-					{/* <div className={classes.controls}>
-						<IconButton aria-label="previous">
-							{theme.direction === "rtl" ? <SkipNextIcon /> : <SkipPreviousIcon />}
-						</IconButton>
-						<IconButton aria-label="play/pause">
-							<PlayArrowIcon className={classes.playIcon} />
-						</IconButton>
-						<IconButton aria-label="next">
-							{theme.direction === "rtl" ? <SkipPreviousIcon /> : <SkipNextIcon />}
-						</IconButton>
-					</div> */}
 				</div>
 			</Card>
 		</div>
@@ -63,13 +70,24 @@ const styles = {
 	details: {
 		display: "flex",
 		flexDirection: "column",
+		width: "100%"
 	},
 	content: {
 		flex: "1 0 auto",
 		paddingBottom: "0",
 		paddingTop: "0",
 	},
-	cover: {
-		width: 151,
+	cardActionArea: {
+		maxWidth: "100px"
 	},
+	cover: {
+		width: "100%",
+		maxHeight: "",
+		paddingTop: "56.25%"
+	},
+	deleteIcon: {
+		color: "salmon",
+		height: "20px",
+		width: "20px"
+	}
 } as IStyles;

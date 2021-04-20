@@ -1,16 +1,23 @@
-import { IProduct } from "../../Types/Abstract";
+import { ICartProduct } from "../../Types/Abstract";
 import * as types from "../ActionTypes/Cart";
 import { IAction } from "../Reducers/CartReducer";
 
-export const cartAdd = (product: IProduct): IAction => ({
+export const cartAdd = (product: ICartProduct): IAction => ({
 	type: types.ADD,
 	payload: {
 		product
 	}
 });
 
-export const cartRemove = (product: IProduct): IAction => ({
+export const cartRemove = (product: ICartProduct): IAction => ({
 	type: types.REMOVE,
+	payload: {
+		product
+	}
+});
+
+export const cartClearOne = (product: ICartProduct): IAction => ({
+	type: types.CLEARONE,
 	payload: {
 		product
 	}
@@ -22,15 +29,8 @@ export const cartClear = (): IAction => ({
 		product: {
 			id: 0,
 			name: "",
-			description: "",
-			photo: "",
 			price: 0,
-			gallery: [{
-				uid: "",
-				photo: ""
-			}],
-			tags: [""],
-			added: new Date()
+			quantity: 1
 		}
 	}
 });

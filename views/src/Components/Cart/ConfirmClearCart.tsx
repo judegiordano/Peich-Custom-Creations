@@ -27,11 +27,10 @@ export const ConfirmClearCart: React.FC<IConfirmClearCart> = ({
 			onClose={handleClose}
 			aria-labelledby="alert-dialog-title"
 			aria-describedby="alert-dialog-description"
-			style={{fontWeight: "bold"}}
 		>
 			<DialogTitle id="alert-dialog-title">{"Are you sure you want to clear your cart?"}</DialogTitle>
 			<DialogContent>
-				<DialogContentText style={{fontWeight: "bold"}} id="alert-dialog-description">
+				<DialogContentText id="alert-dialog-description">
 							Click OK to continue or click CANCEL to keep your cart
 				</DialogContentText>
 			</DialogContent>

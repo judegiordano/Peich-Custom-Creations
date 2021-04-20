@@ -7,7 +7,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import IconButton from "@material-ui/core/IconButton";
 import Collapse from "@material-ui/core/Collapse";
 
-import { IProduct, IStyles } from "../../Types/Abstract";
+import { IProduct, IStyles, ICartProduct } from "../../Types/Abstract";
 import { ProductAction } from "./ProductAction";
 import { AddToCart } from "./ProductPage/AddToCart";
 
@@ -30,7 +30,10 @@ export const ProductCard: React.FC<IProductCard> = ({ styleProp, product }: IPro
 				<ProductAction product={product} />
 
 				<CardActions disableSpacing>
-					<AddToCart product={product} />
+					<AddToCart product={{
+						...product,
+						quantity: 1
+					}as ICartProduct} />
 					<IconButton
 						style={{ transform: expanded ? "rotate(180deg)" : "rotate(0deg)", marginLeft: "auto" }}
 						onClick={handleExpandClick}
@@ -43,7 +46,7 @@ export const ProductCard: React.FC<IProductCard> = ({ styleProp, product }: IPro
 
 				<Collapse in={expanded} timeout="auto" unmountOnExit>
 					<CardContent>
-						<Typography style={{fontWeight: "bold"}} paragraph>
+						<Typography paragraph>
 							{ product.description }
 						</Typography>
 					</CardContent>

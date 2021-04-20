@@ -27,7 +27,7 @@ export const AppInput: React.FC<IInput> = ({
 	label = "label",
 	autoComplete = "off",
 	placeholder = "placeholder...",
-	required,
+	required = true,
 	onChange
 }: IInput): JSX.Element => {
 	return (

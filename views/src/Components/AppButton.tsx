@@ -6,12 +6,13 @@ interface IStyles {
 }
 
 interface IAppButton {
-	onClick: React.MouseEventHandler<HTMLButtonElement> | undefined,
+	onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined,
 	text?: string,
 	disabled?: boolean,
 	startIcon?: React.ReactNode,
 	endIcon?: React.ReactNode,
-	styleProp?: IStyles
+	styleProp?: IStyles,
+	type? : "button" | "submit" | "reset"
 }
 
 export const AppButton: React.FC<IAppButton> = ({
@@ -20,6 +21,7 @@ export const AppButton: React.FC<IAppButton> = ({
 	disabled = false,
 	startIcon,
 	endIcon,
+	type,
 	styleProp
 }: IAppButton): JSX.Element => {
 	return (
@@ -33,6 +35,7 @@ export const AppButton: React.FC<IAppButton> = ({
 				onClick={onClick}
 				startIcon={startIcon}
 				endIcon={endIcon}
+				type={type}
 			>
 				{ text }
 			</Button>

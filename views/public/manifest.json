@@ -3,7 +3,7 @@
   "name": "Create React App Sample",
   "icons": [
     {
-      "src": "peich_logo",
+      "src": "peich_logo.jpg",
       "sizes": "150x150",
       "type": "image/jpg"
     },

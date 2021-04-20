@@ -4,11 +4,11 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import Zoom from "@material-ui/core/Zoom";
 
-import { IProduct, IStyles } from "../../../Types/Abstract";
+import { ICartProduct, IStyles } from "../../../Types/Abstract";
 import { useCart } from "../../../Hooks/useCart";
 
 interface IAddToCart {
-	product: IProduct
+	product: ICartProduct
 }
 
 export const AddToCart: React.FC<IAddToCart> = ({ product }: IAddToCart): JSX.Element => {

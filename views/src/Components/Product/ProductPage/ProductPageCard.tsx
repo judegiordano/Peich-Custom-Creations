@@ -26,7 +26,7 @@ export const ProductPageCard: React.FC<IProductCard> = ({ product, gallery }: IP
 	return (
 		<Card>
 			<CardContent>
-				<Typography style={styles.title} variant="h3" gutterBottom>
+				<Typography style={styles.title} variant="h4" gutterBottom>
 					{ product.name }
 				</Typography>
 
@@ -37,7 +37,12 @@ export const ProductPageCard: React.FC<IProductCard> = ({ product, gallery }: IP
 						${ product.price }
 					</Typography>
 					<Typography style={{marginLeft: "auto", fontSize: "x-large"}} variant="body1" gutterBottom>
-						<AddToCart product={product} />
+						<AddToCart product={{
+							id: product.id,
+							name: product.name,
+							price: product.price,
+							quantity: 1
+						}} />
 					</Typography>
 				</CardActions>
 
@@ -53,7 +58,8 @@ export const ProductPageCard: React.FC<IProductCard> = ({ product, gallery }: IP
 
 const styles = {
 	title: {
-		paddingBottom: "10px"
+		paddingBottom: "10px",
+		fontWeight: "lighter"
 	},
 	description: {
 		textAlign: "justify",

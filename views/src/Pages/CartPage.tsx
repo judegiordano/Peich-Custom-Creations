@@ -8,7 +8,7 @@ import { GetCart } from "../Store/Dispatchers/CartDispatchers";
 import { CartItem } from "../Components/Cart/CartItem";
 import { AppButton } from "../Components/AppButton";
 import { useCart } from "../Hooks/useCart";
-import { IProduct } from "../Types/Abstract";
+import { ICartProduct } from "../Types/Abstract";
 import { ConfirmClearCart } from "../Components/Cart/ConfirmClearCart";
 
 interface IStyles {
@@ -21,8 +21,8 @@ interface ICart {
 
 export const CartPage: React.FC<ICart> = ({ styleProp }: ICart): JSX.Element => {
 
-	const { clearCart } = useCart();
-	const [cartState, setCartState] = useState({ cart: [{} as IProduct] });
+	const { clearCart, clearOne } = useCart();
+	const [cartState, setCartState] = useState({ cart: [{} as ICartProduct] });
 	const [open, setOpen] = useState(false);
 
 	// clear cart confirm functions
@@ -32,6 +32,10 @@ export const CartPage: React.FC<ICart> = ({ styleProp }: ICart): JSX.Element => 
 		clearCart();
 		setCartState(GetCart());
 		handleClose();
+	};
+	const handlClearOne = (product: ICartProduct) => {
+		clearOne(product);
+		setCartState(GetCart());
 	};
 
 	useEffect(() => {
@@ -57,7 +61,7 @@ export const CartPage: React.FC<ICart> = ({ styleProp }: ICart): JSX.Element => 
 				<AppButton text="clear cart" onClick={() => handleOpen()} />
 				{
 					cartState.cart.map(item => (
-						<CartItem key={item.id} quantity={1} product={item} />
+						<CartItem key={item.id} product={item} handleClear={() => handlClearOne(item)} />
 					))
 				}
 				<ConfirmClearCart
