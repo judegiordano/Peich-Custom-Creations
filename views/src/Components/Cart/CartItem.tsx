@@ -3,16 +3,15 @@ import { useHistory } from "react-router";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import DeleteIcon from "@material-ui/icons/Delete";
 
 import { IStyles, ICartProduct } from "../../Types/Abstract";
 import { CardActionArea } from "@material-ui/core";
+import { DeleteFromCart } from "./DeleteFromCart";
 
 interface ICartItem {
 	product: ICartProduct,
-	handleClear: React.MouseEventHandler<HTMLButtonElement> | undefined
+	handleClear: React.MouseEventHandler<HTMLAnchorElement>
 }
 
 export const CartItem: React.FC<ICartItem> = ({ product, handleClear }: ICartItem): JSX.Element => {
@@ -37,13 +36,9 @@ export const CartItem: React.FC<ICartItem> = ({ product, handleClear }: ICartIte
 								${ product.price }
 							</Typography>
 						</Typography>
-						<IconButton
-							style={{padding: 0, display: "inline", float: "right", paddingTop: "5px"}}
-							aria-label="previous"
-							onClick={handleClear}
-						>
-							<DeleteIcon style={styles.deleteIcon} />
-						</IconButton>
+
+						<DeleteFromCart handleClear={handleClear as React.MouseEventHandler<HTMLAnchorElement>}/>
+
 						<Typography style={{textAlign: "left", fontSize:"15px", width: "100%", float: "left"}} variant="subtitle1" color="textSecondary">
 							quantity: x{ product.quantity }
 							<Typography style={{display: "inline", float: "right"}}>

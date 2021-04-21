@@ -69,16 +69,19 @@ export const CartPage: React.FC<ICart> = ({ styleProp }: ICart): JSX.Element => 
 			<div style={{ ...styles.root, ...styleProp }}>
 				<Card>
 					<CardContent>
-						<AppButton styleProp={{...styles.clearButton as IStyles}} text="clear cart" onClick={() => handleOpen()} />
+						<AppButton styleProp={{ ...styles.clearButton as IStyles }} text="clear cart" onClick={() => handleOpen()} />
 						{
 							cartState.cart.map(item => (
 								<CartItem key={item.id} product={item} handleClear={() => handlClearOne(item)} />
 							))
 						}
-						<Card style={{maxWidth: "500px", margin: "auto", marginTop: "10px"}}>
+						<Card style={{ maxWidth: "500px", margin: "auto", marginTop: "10px" }}>
 							<CardContent>
-								<Typography style={{textAlign: "right", color: "gray"}}>
-									${ Math.round(cartTotal * 100) / 100 }
+								<Typography style={{ textAlign: "left", color: "gray", float: "right", paddingBottom: "15px"}}>
+										Total:
+									<Typography style={{ textAlign: "right", color: "gray", display: "inline", paddingLeft: "5px" }}>
+											${Math.round(cartTotal * 100) / 100}
+									</Typography>
 								</Typography>
 							</CardContent>
 						</Card>

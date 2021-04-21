@@ -14,7 +14,7 @@ interface IProductAction {
 
 const SubDateHeader = ({content}: { content: Date}) => {
 	return (
-		<p style={{fontFamily: "system-ui", padding: "none"}}>
+		<p style={{fontFamily: "system-ui", padding: "none", margin: 0, fontSize: "12px"}}>
 			{
 				new Date(content).toLocaleDateString("en-gb",
 					{
@@ -50,7 +50,7 @@ export const ProductAction: React.FC<IProductAction> = ({ product }: IProductAct
 				title={product.name}
 			/>
 			
-			<CardContent>
+			<CardContent style={{paddingBottom: "0px"}}>
 				<Typography style={styles.bolder} variant="body2" color="textSecondary" component="p">
 					{
 						product.tags.length > 0 && (
