@@ -59,8 +59,8 @@ export const CartPage: React.FC<ICart> = ({ styleProp }: ICart): JSX.Element => 
 						<Typography component="h5" variant="h5">
 							shopping cart empty!
 						</Typography>
-						<Typography>
-							<ShoppingCartIcon />
+						<Typography style={{paddingTop: "10px"}}>
+							<ShoppingCartIcon style={{height: "30px", width: "30px"}} />
 						</Typography>
 					</CardContent>
 				</Card>
@@ -107,6 +107,8 @@ const styles = {
 		maxWidth: "800px"
 	},
 	clearButton: {
-		maxWidth: "500px", width: "auto", padding: "10px"
+		maxWidth: "150px",
+		width: "auto",
+		padding: "10px"
 	}
 } as IStyles;
