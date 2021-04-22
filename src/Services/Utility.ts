@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { Response } from "express";
 import fs from "fs";
 
 import config from "../Helpers/Config";
@@ -87,5 +88,27 @@ export default class Utility {
 		} catch (error) {
 			throw new Error(error);
 		}
+	}
+
+	public static SetCookie(res: Response, cookieName: string, cookieValue: string, maxAge?: number): void {
+		res.cookie(cookieName, cookieValue, {
+			maxAge: maxAge || 1000 * 60 * 60 * 24 * 7,
+			path: "/",
+			httpOnly: true,
+			secure: config.IS_PROD,
+			signed: true,
+			sameSite: true,
+		});
+	}
+
+	public static ClearCookie(res: Response, cookieName: string): void {
+		res.clearCookie(cookieName, {
+			maxAge: 0,
+			path: "/",
+			httpOnly: true,
+			secure: config.IS_PROD,
+			signed: true,
+			sameSite: true,
+		});
 	}
 }

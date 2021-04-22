@@ -37,6 +37,8 @@ const config = {
 	// jwt
 	JWT_SECRET: process.env.JWT_SECRET || undefined,
 	JWT_EXPIRATION: "7d",
+	JWT_ADMIN_EXPIRATION: "1d",
+	COOKIE_SECRET: process.env.COOKIE_SECRET || undefined
 };
 
 if (!config.CONNECTION_STRING) {

@@ -4,7 +4,7 @@ import Product from "../Repositories/ProductRepository";
 
 const router = Router();
 
-router.get("/:id/:uid", async (req, res) => {
+router.get("/:id/:uid", async (req, res, next) => {
 	try {
 		const photoId = parseInt(req.params.id as string);
 		const galleryUid = req.params.uid as string;
@@ -14,7 +14,7 @@ router.get("/:id/:uid", async (req, res) => {
 
 		res.type("image/png").send(image);
 	} catch (error) {
-		res.json(error);
+		next(error);
 	}
 });
 

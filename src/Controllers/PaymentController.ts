@@ -8,7 +8,7 @@ import Paypal from "../Helpers/Paypal";
 
 const router = Router();
 
-router.post("/pay", async (req, res) => {
+router.post("/pay", async (req, res, next) => {
 	try {
 		const invoices = req.body.cart as IInvoice[];
 
@@ -32,11 +32,11 @@ router.post("/pay", async (req, res) => {
 		const paymentUrl = await Paypal.PaymentTransport(items, total);
 		res.json(paymentUrl);
 	} catch (error) {
-		res.json(error);
+		next(error);
 	}
 });
 
-router.get("/success/:pricejid", async (req, res) => {
+router.get("/success/:pricejid", async (req, res, next) => {
 	try {
 		const payerId = req.query.PayerID as string;
 		const paymentId = req.query.paymentId as string;
@@ -50,26 +50,26 @@ router.get("/success/:pricejid", async (req, res) => {
 		const ok = Jwt.SignPaymentOk(true);
 		res.redirect(`/paymentsuccess/${ok}`);
 	} catch (error) {
-		res.json(error);
+		next(error);
 	}
 });
 
-router.post("/success/verify", async (req, res) => {
+router.post("/success/verify", async (req, res, next) => {
 	try {
 		const ok = Jwt.VerifyOk(req.body.token);
 		if (!ok) throw "invalid token";
 
 		res.json({ ok: true });
 	} catch (error) {
-		res.json(error);
+		next(error);
 	}
 });
 
-router.get("/cancel", async (req, res) => {
+router.get("/cancel", async (req, res, next) => {
 	try {
 		res.send("payment cancelled");
 	} catch (error) {
-		res.json(error);
+		next(error);
 	}
 });
 

@@ -10,13 +10,13 @@ const router = Router();
  * /api/products?limit={number}
  * 
 */
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
 	try {
 		res.json({
 			products: await Product.GetMany(parseInt(req.query.limit as string))
 		});
 	} catch (error) {
-		res.json(error);
+		next(error);
 	}
 });
 
@@ -24,13 +24,13 @@ router.get("/", async (req, res) => {
  * /api/products/{id:number}
  * 
 */
-router.get("/:id", async (req, res) => {
+router.get("/:id", async (req, res, next) => {
 	try {
 		res.json({
 			product: await Product.GetOne(parseInt(req.params.id as string))
 		});
 	} catch (error) {
-		res.json(error);
+		next(error);
 	}
 });
 
@@ -38,13 +38,13 @@ router.get("/:id", async (req, res) => {
  * /api/products/image/{id:number}
  * 
 */
-router.get("/image/:id", async (req, res) => {
+router.get("/image/:id", async (req, res, next) => {
 	try {
 		const product = await Product.GetOnePhoto(parseInt(req.params.id as string));
 		const image: Buffer = Buffer.from(product.photo, "base64");
 		res.type("image/png").send(image);
 	} catch (error) {
-		res.json(error);
+		next(error);
 	}
 });
 
@@ -52,17 +52,17 @@ router.get("/image/:id", async (req, res) => {
  * /api/products/{id:number}
  * 
 */
-router.delete("/:id", DevAuth, async (req, res) => {
+router.delete("/:id", DevAuth, async (req, res, next) => {
 	try {
 		res.json({
 			product: await Product.Delete(parseInt(req.params.id as string))
 		});
 	} catch (error) {
-		res.json(error);
+		next(error);
 	}
 });
 
-router.post("/add", DevAuth, async (req, res) => {
+router.post("/add", DevAuth, async (req, res, next) => {
 	try {
 		if (!req.files)
 			throw "No file uploaded";
@@ -77,11 +77,11 @@ router.post("/add", DevAuth, async (req, res) => {
 			success: newProduct
 		});
 	} catch (error) {
-		res.json(error);
+		next(error);
 	}
 });
 
-router.post("/image/update/:id", DevAuth, async (req, res) => {
+router.post("/image/update/:id", DevAuth, async (req, res, next) => {
 	try {
 		if (!req.files)
 			throw "No file uploaded";
@@ -92,11 +92,11 @@ router.post("/image/update/:id", DevAuth, async (req, res) => {
 			success: await Product.UpdatePhoto(parseInt(req.params.id as string), data)
 		});
 	} catch (error) {
-		res.json(error);
+		next(error);
 	}
 });
 
-router.post("/gallery/add/:id", DevAuth, async (req, res) => {
+router.post("/gallery/add/:id", DevAuth, async (req, res, next) => {
 	try {
 		if (!req.files)
 			throw "No file uploaded";
@@ -107,7 +107,7 @@ router.post("/gallery/add/:id", DevAuth, async (req, res) => {
 			success: await Product.AddGallery(parseInt(req.params.id as string), data)
 		});
 	} catch (error) {
-		res.json(error);
+		next(error);
 	}
 });
 

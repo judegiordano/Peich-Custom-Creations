@@ -1,12 +1,15 @@
 import { Router } from "express";
 
 import Utility from "../Services/Utility";
+import Admin from "../Repositories/AdminRepository";
 import config from "../Helpers/Config";
 import Mail from "../Services/Mailer";
+import DevAuth from "../Middleware/DevAuth";
+import { IAdmin } from "../Models/Admin";
 
 const router = Router();
 
-router.post("/contact", async (req, res) => {
+router.post("/contact", async (req, res, next) => {
 	try {
 		const { email, name, message, token } = req.body;
 		if (!email || !name || !message || !token) throw "missing body requirements";
@@ -26,7 +29,27 @@ router.post("/contact", async (req, res) => {
 			data: mail
 		});
 	} catch (error) {
-		res.json(error);
+		next(error);
+	}
+});
+
+router.delete("/revoke/:_id", DevAuth, async (req, res, next) => {
+	try {
+		const { _id } = req.params;
+		const success = await Admin.IncrementToken(_id);
+		res.json({ success });
+	} catch (error) {
+		next(error);
+	}
+});
+
+router.post("/insert/admin", DevAuth, async (req, res, next) => {
+	try {
+		const register = req.body as IAdmin;
+		const success = await Admin.InsertAdmin(register);
+		res.json({ success });
+	} catch (error) {
+		next(error);
 	}
 });
 
