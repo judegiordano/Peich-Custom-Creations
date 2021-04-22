@@ -43,6 +43,7 @@ export const useCart = (): IUseCart => {
 			setLoading(true);
 			e.preventDefault();
 			const { data } = await client.post("payment/pay", { cart: [ ...invoiceCart ]});
+			setLoading(false);
 			window.location = data;
 		} catch (error) {
 			setLoading(false);
