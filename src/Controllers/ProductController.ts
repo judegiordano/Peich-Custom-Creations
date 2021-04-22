@@ -2,6 +2,7 @@ import { Router } from "express";
 import { UploadedFile } from "express-fileupload";
 
 import Product from "../Repositories/ProductRepository";
+import DevAuth from "../Middleware/DevAuth";
 
 const router = Router();
 
@@ -51,7 +52,7 @@ router.get("/image/:id", async (req, res) => {
  * /api/products/{id:number}
  * 
 */
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", DevAuth, async (req, res) => {
 	try {
 		res.json({
 			product: await Product.Delete(parseInt(req.params.id as string))
@@ -61,7 +62,7 @@ router.delete("/:id", async (req, res) => {
 	}
 });
 
-router.post("/add", async (req, res) => {
+router.post("/add", DevAuth, async (req, res) => {
 	try {
 		if (!req.files)
 			throw "No file uploaded";
@@ -80,7 +81,7 @@ router.post("/add", async (req, res) => {
 	}
 });
 
-router.post("/image/update/:id", async (req, res) => {
+router.post("/image/update/:id", DevAuth, async (req, res) => {
 	try {
 		if (!req.files)
 			throw "No file uploaded";
@@ -95,7 +96,7 @@ router.post("/image/update/:id", async (req, res) => {
 	}
 });
 
-router.post("/gallery/add/:id", async (req, res) => {
+router.post("/gallery/add/:id", DevAuth, async (req, res) => {
 	try {
 		if (!req.files)
 			throw "No file uploaded";

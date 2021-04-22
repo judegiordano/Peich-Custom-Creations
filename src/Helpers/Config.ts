@@ -15,6 +15,7 @@ const config = {
 	IS_PROD: <boolean>(process.env.NODE_ENV == Env.prod) ? true : false,
 	IS_COMPILED: <boolean>(path.extname(__filename).includes("js")) ? true : false,
 	CORES: <number>os.cpus().length,
+	APP_CODE: process.env.APP_CODE || undefined,
 	// db
 	CONNECTION_STRING: process.env.CONNECTION_STRING || undefined,
 	// smtp
