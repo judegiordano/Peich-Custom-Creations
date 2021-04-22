@@ -10,6 +10,7 @@ import { AppButton } from "../Components/AppButton";
 import { useCart } from "../Hooks/useCart";
 import { ICartProduct } from "../Types/Abstract";
 import { ConfirmClearCart } from "../Components/Cart/ConfirmClearCart";
+import { PayPalButton } from "../Components/Cart/PayPalButton";
 
 interface IStyles {
 	[key: string]: React.CSSProperties
@@ -19,11 +20,17 @@ interface ICart {
 	styleProp?: IStyles
 }
 
+interface IPayPalInvoice {
+	itemId: number,
+	quantity: number
+}
+
 export const CartPage: React.FC<ICart> = ({ styleProp }: ICart): JSX.Element => {
 
 	const { clearCart, clearOne } = useCart();
 	const [cartTotal, setCartTotal] = useState(0);
 	const [cartState, setCartState] = useState({ cart: [{} as ICartProduct] });
+	const [invoiceCart, setInvoiceCart] = useState([{} as IPayPalInvoice]);
 	const [open, setOpen] = useState(false);
 
 	// clear cart confirm functions
@@ -45,10 +52,22 @@ export const CartPage: React.FC<ICart> = ({ styleProp }: ICart): JSX.Element => 
 		});
 		return total;
 	};
+	const setPayPalCart = () => {
+		const payPalCart: IPayPalInvoice[] = [];
+
+		cartState.cart.forEach(item => {
+			payPalCart.push({
+				itemId: item.id,
+				quantity: item.quantity
+			});
+		});
+		setInvoiceCart(payPalCart);
+	};
 
 	useEffect(() => {
 		setCartState(GetCart());
 		setCartTotal(getCartTotal());
+		setPayPalCart();
 	}, [cartState]);
 
 	return (
@@ -66,34 +85,39 @@ export const CartPage: React.FC<ICart> = ({ styleProp }: ICart): JSX.Element => 
 				</Card>
 			</div>
 		) : (
-			<div style={{ ...styles.root, ...styleProp }}>
-				<Card>
-					<CardContent>
-						<AppButton styleProp={{ ...styles.clearButton as IStyles }} text="clear cart" onClick={() => handleOpen()} />
-						{
-							cartState.cart.map(item => (
-								<CartItem key={item.id} product={item} handleClear={() => handlClearOne(item)} />
-							))
-						}
-						<Card style={{ maxWidth: "500px", margin: "auto", marginTop: "10px" }}>
-							<CardContent>
-								<Typography style={{ textAlign: "left", color: "gray", float: "right", paddingBottom: "15px"}}>
+			<>
+				<div style={{ ...styles.root, ...styleProp }}>
+					<Card>
+						<CardContent>
+							{/* clear cart */}
+							<AppButton styleProp={{ ...styles.clearButton as IStyles }} text="clear cart" onClick={() => handleOpen()} />
+							{
+								cartState.cart.map(item => (
+									<CartItem key={item.id} product={item} handleClear={() => handlClearOne(item)} />
+								))
+							}
+							<Card style={{ maxWidth: "500px", margin: "auto", marginTop: "10px" }}>
+								<CardContent>
+									<Typography style={{ textAlign: "left", color: "gray", float: "right", paddingBottom: "15px"}}>
 										Total:
-									<Typography style={{ textAlign: "right", color: "gray", display: "inline", paddingLeft: "5px" }}>
+										<Typography style={{ textAlign: "right", color: "gray", display: "inline", paddingLeft: "5px" }}>
 											${Math.round(cartTotal * 100) / 100}
+										</Typography>
 									</Typography>
-								</Typography>
-							</CardContent>
-						</Card>
-					</CardContent>
-				</Card>
-				<ConfirmClearCart
-					handleCancel={handleClose}
-					handleOk={handleOk}
-					handleClose={handleClose}
-					open={open}
-				/>
-			</div>
+								</CardContent>
+							</Card>
+						</CardContent>
+						{/* checkout button */}
+					</Card>
+					<ConfirmClearCart
+						handleCancel={handleClose}
+						handleOk={handleOk}
+						handleClose={handleClose}
+						open={open}
+					/>
+				</div>
+				<PayPalButton invoiceCart={invoiceCart} />
+			</>
 		)
 	);
 };

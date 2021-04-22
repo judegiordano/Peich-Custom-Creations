@@ -5,6 +5,11 @@ export enum Env {
 	prod = "production"
 }
 
+export enum PayPalMode {
+	live = "live",
+	sandbox = "sandbox"
+}
+
 export enum Host {
 	local = "localhost",
 	ip = "127.0.0.1"

@@ -21,3 +21,16 @@ export interface IDevMail {
 	preview: string | false,
 	raw: any
 }
+
+export interface IInvoice {
+	itemId: number,
+	quantity: number
+}
+
+export interface IPayPalInvoice {
+	name: string,
+	sku: string,
+	price: string,
+	currency: string,
+	quantity: number
+}
