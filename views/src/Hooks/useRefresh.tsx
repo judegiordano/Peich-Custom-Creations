@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useHistory } from "react-router";
 
 import { client } from "../Api/Client";
 
@@ -11,9 +10,8 @@ interface IUseRefresh {
 }
 
 export const useRefresh = (): IUseRefresh => {
-	const history = useHistory();
 	const [loading, setLoading] = useState(false);
-	const [isValid, setIsValid] = useState(false);
+	const [isValid, setIsValid] = useState(Boolean);
 
 	const refresh = async () => {
 		try {
@@ -21,15 +19,15 @@ export const useRefresh = (): IUseRefresh => {
 			const { data } = await client.post("/admin/refresh");
 
 			if(!data.ok) {
-				setLoading(false);
 				setIsValid(false);
+				setLoading(false);
 			}
 
 			setIsValid(true);
 			setLoading(false);
 		} catch (error) {
+			setIsValid(false);
 			setLoading(false);
-			setIsValid(true);
 		}
 	};
 
@@ -37,10 +35,10 @@ export const useRefresh = (): IUseRefresh => {
 		try {
 			const { data } = await client.post("/admin/logout");
 			console.log(data);
-			history.push("/");
+			window.location.href = "/";
 		} catch (error) {
-			history.push("/");
 			console.log(error);
+			window.location.href = "/";
 		}
 	};
 

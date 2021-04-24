@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import SendIcon from "@material-ui/icons/Send";
 import { Card, CardContent } from "@material-ui/core";
 import { AppButton } from "../Components/AppButton";
 import { AppInput } from "../Components/AppInput";
 import { useLogin } from "../Hooks/useLogin";
 import { AppLoader } from "../Components/AppLoader";
-import { client } from "../Api/Client";
-import { useHistory } from "react-router";
+import { Redirect } from "react-router";
 
 interface IStyles {
 	[key: string]: React.CSSProperties
@@ -14,34 +13,14 @@ interface IStyles {
 
 interface IAdminLoginPage {
 	styleProp?: IStyles,
+	auth: boolean
 }
 
-export const AdminLoginPage: React.FC<IAdminLoginPage> = ({ styleProp }: IAdminLoginPage): JSX.Element => {
+export const AdminLoginPage: React.FC<IAdminLoginPage> = ({ styleProp, auth }: IAdminLoginPage): JSX.Element => {
 	
-	const history = useHistory();
 	const { loading, login, setBody, body, error } = useLogin();
-	const [checkLoad, setCheckLoad] = useState(true);
-
-	const checkValid = async () => {
-		try {
-			setCheckLoad(true);
-			const { data } = await client.post("/admin/refresh");
-			if(data.ok) history.push("/admin");
-			setCheckLoad(false);
-		} catch (error) {
-			setCheckLoad(false);
-		}
-	};
-
-	useEffect(() => {
-		checkValid();
-	}, []);
-
-	if(checkLoad) {
-		return (
-			<AppLoader visible={true} />
-		);
-	}
+	
+	if(auth) return <Redirect to="/admin" />;
 
 	return (
 		<div style={{...styles.root, ...styleProp}}>

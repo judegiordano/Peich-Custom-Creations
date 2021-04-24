@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router";
 
 import { client } from "../Api/Client";
 
@@ -19,8 +18,6 @@ interface IUseLogin {
 
 export const useLogin = (): IUseLogin => {
 
-	const history = useHistory();
-
 	const [error, setError] = useState({
 		ok: true,
 		message: ""
@@ -38,16 +35,15 @@ export const useLogin = (): IUseLogin => {
 			e.preventDefault();
 
 			setLoading(true);
-			const { data } = await client.post("/admin/login", body);
+			const { data } = await client.post("admin/login", body);
 
-			if(data.ok) {
-				setError({ok: true, message: ""});
-				setLoading(false);
-				history.push({
-					pathname: "/admin",
-				});
+			if(!data.ok) {
+				throw new Error();
 			}
-			else throw new Error();
+
+			setError({ok: true, message: ""});
+			setLoading(false);
+			window.location.href = "/admin";
 		} catch (error) {
 			console.log(error);
 			console.log(error.message);

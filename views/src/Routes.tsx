@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import { NotFound } from "./Pages/NotFound";
@@ -14,16 +14,13 @@ import { AdminLoginPage } from "./Pages/AdminLoginPage";
 import { AdminPage } from "./Pages/AdminPage";
 import { useRefresh } from "./Hooks/useRefresh";
 import { AppLoader } from "./Components/AppLoader";
-import { Redirect } from "react-router";
 
 export const Routes: React.FC = (): JSX.Element => {
 
 	const { refresh, isValid, loading } = useRefresh();
-	const [isAuth, setIsAuth] = useState(true);
 
 	useEffect(() => {
 		refresh();
-		setIsAuth(isValid);
 	}, [isValid]);
 
 	return (
@@ -39,12 +36,10 @@ export const Routes: React.FC = (): JSX.Element => {
 					<Route path="/contact" component={ContactPage} />
 					<Route path="/emailsuccess" component={ContactSuccesPage} />
 					<Route path="/paymentsuccess/:token" component={PaymentSuccessPage} />
-					<Route path="/admin/login" component={AdminLoginPage} />
-					{
-						isAuth ? (
-							<Route path="/admin" component={AdminPage} />
-						) : <Redirect to="/admin/login" />
-					}
+					{/* admin routes */}
+					<Route path="/admin/login" render={() => <AdminLoginPage auth={isValid} />} />
+					<Route path="/admin" render={() => <AdminPage auth={isValid} />} />
+					{/* generic */}
 					<Route path="/error"  component={Error} />
 					<Route component={NotFound} />
 				</Switch>

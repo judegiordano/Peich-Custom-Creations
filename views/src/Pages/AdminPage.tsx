@@ -1,4 +1,5 @@
 import React from "react";
+import { Redirect } from "react-router";
 
 import { AppButton } from "../Components/AppButton";
 import { AppLoader } from "../Components/AppLoader";
@@ -9,12 +10,15 @@ interface IStyles {
 }
 
 interface IAdminPage {
-	styleProp?: IStyles
+	styleProp?: IStyles,
+	auth: boolean
 }
 
-export const AdminPage: React.FC<IAdminPage> = ({ styleProp }: IAdminPage): JSX.Element => {
+export const AdminPage: React.FC<IAdminPage> = ({ styleProp, auth }: IAdminPage): JSX.Element => {
 
 	const { loading, logout } = useRefresh();
+
+	if(!auth) return <Redirect to="/admin/login" />;
 
 	return (
 		loading ? (
