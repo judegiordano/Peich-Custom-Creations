@@ -23,11 +23,10 @@ interface IStyles {
 }
 
 interface INavBar {
-	styleProp?: IStyles,
-	isAuth: boolean
+	styleProp?: IStyles
 }
 
-export const NavBar: React.FC<INavBar> = ({ styleProp, isAuth=false }: INavBar): JSX.Element => {
+export const NavBar: React.FC<INavBar> = ({ styleProp }: INavBar): JSX.Element => {
 
 	const history = useHistory();
 

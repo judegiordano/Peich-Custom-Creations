@@ -31,7 +31,7 @@ export const Routes: React.FC = (): JSX.Element => {
 			<AppLoader visible={true} />
 		) : (
 			<BrowserRouter>
-				<NavBar isAuth={isAuth} />
+				<NavBar />
 				<Switch>
 					<Route path="/" exact component={AllProductsPage} />
 					<Route path="/item/:id" component={ProductPage} />
