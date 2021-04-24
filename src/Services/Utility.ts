@@ -101,6 +101,17 @@ export default class Utility {
 		});
 	}
 
+	public static Logout(res: Response, cookieName: string): void {
+		res.cookie(cookieName, "", {
+			maxAge: 0,
+			path: "/",
+			httpOnly: true,
+			secure: config.IS_PROD,
+			signed: true,
+			sameSite: true,
+		});
+	}
+
 	public static ClearCookie(res: Response, cookieName: string): void {
 		res.clearCookie(cookieName, {
 			maxAge: 0,

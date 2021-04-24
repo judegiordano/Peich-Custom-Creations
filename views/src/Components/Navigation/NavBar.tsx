@@ -4,6 +4,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import LockIcon from "@material-ui/icons/Lock";
 import Divider from "@material-ui/core/Divider";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -22,10 +23,11 @@ interface IStyles {
 }
 
 interface INavBar {
-	styleProp?: IStyles
+	styleProp?: IStyles,
+	isAuth: boolean
 }
 
-export const NavBar: React.FC<INavBar> = ({ styleProp }: INavBar): JSX.Element => {
+export const NavBar: React.FC<INavBar> = ({ styleProp, isAuth=false }: INavBar): JSX.Element => {
 
 	const history = useHistory();
 
@@ -103,6 +105,13 @@ export const NavBar: React.FC<INavBar> = ({ styleProp }: INavBar): JSX.Element =
 							<MailIcon />
 						</ListItemIcon>
 						<ListItemText primary="contact us" />
+					</ListItem>
+					<Divider />
+					<ListItem button onClick={() => route("/admin/login")}>
+						<ListItemIcon>
+							<LockIcon />
+						</ListItemIcon>
+						<ListItemText primary="admin portal" />
 					</ListItem>
 				</List>
 				<Divider />

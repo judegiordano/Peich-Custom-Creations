@@ -4,6 +4,7 @@ import { IAdmin } from "../Models/Admin";
 import Jwt from "../Helpers/Jwt";
 import Utility from "../Services/Utility";
 import Auth from "../Middleware/Auth";
+import config from "../Helpers/Config";
 import AdminRepository from "../Repositories/AdminRepository";
 
 const router = Router();
@@ -17,7 +18,10 @@ router.post("/login", async (req, res, next) => {
 
 		Utility.SetCookie(res, "jid", token);
 
-		res.json({ token });
+		res.json({
+			ok: true,
+			token
+		});
 	} catch (error) {
 		next(error);
 	}
@@ -39,7 +43,14 @@ router.post("/refresh", Auth, async (req, res, next) => {
 
 router.post("/logout", Auth, async (req, res, next) => {
 	try {
-		Utility.ClearCookie(res, "jid");
+		res.cookie("jid", "401", {
+			maxAge: 0,
+			path: "/",
+			httpOnly: true,
+			secure: config.IS_PROD,
+			signed: true,
+			sameSite: true,
+		});
 
 		res.json({
 			ok: true,

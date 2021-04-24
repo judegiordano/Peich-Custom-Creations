@@ -24,3 +24,8 @@ export interface ICartProduct {
 	price: number,
 	quantity: number
 }
+
+export interface ISocketResponse {
+	ok: boolean,
+	data: unknown
+}
