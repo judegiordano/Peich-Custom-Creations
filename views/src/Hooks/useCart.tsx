@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useSnackbar } from "notistack";
+import { useDispatch } from "react-redux";
 
+import { AppDispatch } from "../Store/Store";
+import { cartAdd, cartClear as _clearCart, cartClearOne } from "../Store/Actions/Cart";
 import { ICartProduct } from "../Types/Abstract";
-import { AddToCart, ClearCart, ClearOne, GetCart } from "../Store/Dispatchers/CartDispatchers";
 import { client } from "../Api/Client";
 
 interface IPayPalInvoice {
@@ -16,30 +18,26 @@ interface IUseCart {
 	clearOne: (product: ICartProduct) => void,
 	loading: boolean,
 	checkout: (e: React.FormEvent<HTMLFormElement>, invoiceCart: IPayPalInvoice[]) => Promise<void>,
-	count: number
 }
 
 export const useCart = (): IUseCart => {
 	
+	const dispatch = useDispatch<AppDispatch>();
 	const { enqueueSnackbar } = useSnackbar();
 	const [loading, setLoading] = useState(false);
-	const [count, setCount] = useState(GetCart().cart.length);
 
 	const addToCart = (product: ICartProduct): void => {
-		AddToCart(product);
-		setCount(count + 1);
+		dispatch(cartAdd(product));
 		enqueueSnackbar(`added ${product.name} to cart`, { variant: "success"});
 	};
 
 	const clearCart = (): void => {
-		ClearCart();
-		// setCart(GetCart());
+		dispatch(_clearCart());
 		enqueueSnackbar("cart cleared", { variant: "warning"});
 	};
 
 	const clearOne = (product: ICartProduct): void => {
-		ClearOne(product);
-		// setCart(GetCart());
+		dispatch(cartClearOne(product));
 		enqueueSnackbar(`${product.name} removed`, { variant: "warning"});
 	};
 
@@ -61,7 +59,6 @@ export const useCart = (): IUseCart => {
 		clearCart,
 		clearOne,
 		loading,
-		checkout,
-		count
+		checkout
 	};
 };

@@ -15,18 +15,21 @@ import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import InstagramIcon from "@material-ui/icons/Instagram";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import MailIcon from "@material-ui/icons/Mail";
+import Badge from "@material-ui/core/Badge";
 
 import { colors, config } from "../../Config/Config";
+import { Typography } from "@material-ui/core";
 
 interface IStyles {
 	[key: string]: React.CSSProperties
 }
 
 interface INavBar {
-	styleProp?: IStyles
+	styleProp?: IStyles,
+	cartCount: number
 }
 
-export const NavBar: React.FC<INavBar> = ({ styleProp }: INavBar): JSX.Element => {
+export const NavBar: React.FC<INavBar> = ({ styleProp, cartCount }: INavBar): JSX.Element => {
 
 	const history = useHistory();
 
@@ -58,10 +61,17 @@ export const NavBar: React.FC<INavBar> = ({ styleProp }: INavBar): JSX.Element =
 					<IconButton
 						aria-label="open drawer"
 						onClick={toggleDrawer(true)}
-						edge="start"
 						style={{color: "black"}}
 					>
 						<MenuIcon />
+					</IconButton>
+					<Typography style={{flexGrow: 1, textAlign: "left"}}>
+						Peich Creations
+					</Typography>
+					<IconButton onClick={() => history.push("/cart")} >
+						<Badge badgeContent={cartCount} color="primary">
+							<ShoppingCartIcon />
+						</Badge>
 					</IconButton>
 				</Toolbar>
 			</AppBar>
@@ -121,7 +131,7 @@ export const NavBar: React.FC<INavBar> = ({ styleProp }: INavBar): JSX.Element =
 
 const styles = {
 	root: {
-		margin: "auto",
+		// margin: "auto",
 		textAlign: "center"
 	},
 	link: {

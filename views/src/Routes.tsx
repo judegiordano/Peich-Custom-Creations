@@ -15,7 +15,11 @@ import { AdminPage } from "./Pages/AdminPage";
 import { useRefresh } from "./Hooks/useRefresh";
 import { AppLoader } from "./Components/AppLoader";
 
-export const Routes: React.FC = (): JSX.Element => {
+interface IRoutes {
+	cartCount: number
+}
+
+export const Routes: React.FC<IRoutes> = ({cartCount}: IRoutes): JSX.Element => {
 
 	const { refresh, isValid, loading } = useRefresh();
 
@@ -28,7 +32,7 @@ export const Routes: React.FC = (): JSX.Element => {
 			<AppLoader visible={true} />
 		) : (
 			<BrowserRouter>
-				<NavBar />
+				<NavBar cartCount={cartCount} />
 				<Switch>
 					<Route path="/" exact component={AllProductsPage} />
 					<Route path="/item/:id" component={ProductPage} />

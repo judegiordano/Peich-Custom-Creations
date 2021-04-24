@@ -4,7 +4,8 @@ import CheckIcon from "@material-ui/icons/CheckCircleOutline";
 import { Card, CardContent, Typography } from "@material-ui/core";
 
 import { client } from "../Api/Client";
-import { ClearCart } from "../Store/Dispatchers/CartDispatchers";
+import { useCart } from "../Hooks/useCart";
+import { AppLoader } from "../Components/AppLoader";
 
 interface IStyles {
 	[key: string]: React.CSSProperties
@@ -13,6 +14,7 @@ interface IStyles {
 export const PaymentSuccessPage: React.FC = (): JSX.Element => {
 	
 	const { token } = useParams() as { token: string };
+	const { clearCart } = useCart();
 	const [valid, setValid] = useState(false);
 	const [loading, setLoading] = useState(true);
 
@@ -24,7 +26,7 @@ export const PaymentSuccessPage: React.FC = (): JSX.Element => {
 			});
 			setValid(data.ok);
 			setLoading(false);
-			ClearCart();
+			clearCart();
 		} catch (error) {
 			setValid(false);
 			setLoading(false);
@@ -37,7 +39,7 @@ export const PaymentSuccessPage: React.FC = (): JSX.Element => {
 
 	return (
 		loading ? (
-			<></>
+			<AppLoader visible={true} />
 		) : (
 			!valid ? (
 				<Redirect to="/" />

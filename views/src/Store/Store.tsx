@@ -6,4 +6,8 @@ const reducers = combineReducers({
 	cart: cartReducer
 });
 
+export type RootState = ReturnType<typeof reducers>;
+
 export const store = createStore(reducers);
+
+export type AppDispatch = typeof store.dispatch;
