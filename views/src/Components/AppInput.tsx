@@ -35,7 +35,6 @@ export const AppInput: React.FC<IInput> = ({
 			<TextField
 				style={{fontWeight: "bold"}}
 				fullWidth
-				id="outlined-basic"
 				label={label}
 				disabled={disabled}
 				variant="outlined"

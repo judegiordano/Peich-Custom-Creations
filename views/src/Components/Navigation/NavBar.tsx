@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -31,8 +30,6 @@ interface INavBar {
 
 export const NavBar: React.FC<INavBar> = ({ styleProp, cartCount }: INavBar): JSX.Element => {
 
-	const history = useHistory();
-
 	const [open, setOpen] = useState(false);
 
 	const toggleDrawer = (open: boolean) => (
@@ -48,10 +45,25 @@ export const NavBar: React.FC<INavBar> = ({ styleProp, cartCount }: INavBar): JS
 		}
 		setOpen(open);
 	};
-
 	const route = (to: string) => {
-		history.push(to);
+		// might switch this back
+		// to history.push() as it 
+		// renders faster
+		window.location.href = to;
 		setOpen(false);
+	};
+	const getPathname = () => {
+		const path = window.location.pathname;
+		switch (true) {
+		case /.*cart.*/.test(path):
+			return "Cart";
+		case /.*contact.*/.test(path):
+			return "Contact";
+		case /.*admin.*/.test(path):
+			return "Admin";
+		default:
+			return "Home";
+		}
 	};
 
 	return (
@@ -66,9 +78,9 @@ export const NavBar: React.FC<INavBar> = ({ styleProp, cartCount }: INavBar): JS
 						<MenuIcon />
 					</IconButton>
 					<Typography style={{flexGrow: 1, textAlign: "left"}}>
-						Peich Creations
+						{ getPathname() }
 					</Typography>
-					<IconButton onClick={() => history.push("/cart")} >
+					<IconButton onClick={() => route("/cart")} >
 						<Badge badgeContent={cartCount} color="primary">
 							<ShoppingCartIcon />
 						</Badge>
