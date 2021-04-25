@@ -20,6 +20,29 @@ router.get("/", async (req, res, next) => {
 	}
 });
 
+router.get("/count", async (req, res, next) => {
+	try {
+		res.json({
+			ok: true,
+			count: await Product.GetCount()
+		});
+	} catch (error) {
+		next(error);
+	}
+});
+
+router.get("/chunk/:page", async (req, res, next) => {
+	try {
+		const { page } = req.params;
+		const { limit } = req.query;
+		res.json({
+			products: await Product.GetChunk(parseInt(page), parseInt(limit as string))
+		});
+	} catch (error) {
+		next(error);
+	}
+});
+
 /** 
  * /api/products/{id:number}
  * 

@@ -68,6 +68,22 @@ export default class UserRepository {
 		}
 	}
 
+	public static async GetChunk(page: number, limit: number): Promise<IProduct[]> {
+		try {
+			return await Product.find().skip((page - 1) * limit).select("-gallery -photo -_id").limit(limit);
+		} catch (error) {
+			throw Error(error);
+		}
+	}
+
+	public static async GetCount(): Promise<number> {
+		try {
+			return await Product.countDocuments();
+		} catch (error) {
+			throw Error(error);
+		}
+	}
+
 	public static async UpdatePhoto(id: number, file: Buffer): Promise<boolean> {
 		try {
 			const exists = await Product.findOne({ id });

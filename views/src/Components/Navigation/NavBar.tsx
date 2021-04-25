@@ -77,7 +77,7 @@ export const NavBar: React.FC<INavBar> = ({ styleProp, cartCount }: INavBar): JS
 					>
 						<MenuIcon />
 					</IconButton>
-					<Typography style={{flexGrow: 1, textAlign: "left"}}>
+					<Typography style={{flexGrow: 1, textAlign: "left", color:"black"}}>
 						{ getPathname() }
 					</Typography>
 					<IconButton onClick={() => route("/cart")} >
