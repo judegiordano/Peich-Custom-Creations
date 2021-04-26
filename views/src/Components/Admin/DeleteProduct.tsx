@@ -53,7 +53,7 @@ export const DeleteProduct: React.FC<IDeleteProduct> = ({ styleProp }: IDeletePr
 							onChange={(e, value) => setDeleteItem(value as IProductLean)}
 							options={products}
 							getOptionLabel={option => option.name}
-							style={{ width: 300 }}
+							style={{ width: "100%" }}
 							renderInput={(params) => <TextField {...params} label="Product Name" variant="outlined" />}
 						/>
 					</DialogContent>
