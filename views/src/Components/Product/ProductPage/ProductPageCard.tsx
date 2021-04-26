@@ -1,11 +1,9 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import "react-gallery-carousel/dist/index.css";
-import { Card, CardContent } from "@material-ui/core";
 import CardActions from "@material-ui/core/CardActions";
 
 import { IProduct } from "../../../Types/Abstract";
-import { ShareBar } from "./ShareBar";
 import { ProductImage } from "./ProductImage";
 import { AddToCart } from "./AddToCart";
 
@@ -24,35 +22,27 @@ interface IProductCard {
 
 export const ProductPageCard: React.FC<IProductCard> = ({ product, gallery }: IProductCard): JSX.Element => {
 	return (
-		<Card>
-			<CardContent>
-				<Typography style={styles.title} variant="h4" gutterBottom>
-					{ product.name }
-				</Typography>
+		<div style={{height: "100%"}}>
+			<ProductImage product={product} gallery={gallery} />
 
-				<ProductImage product={product} gallery={gallery} />
-
-				<CardActions disableSpacing style={styles.price}>
-					<Typography style={{textAlign: "left", fontSize: "x-large"}} variant="body1" gutterBottom>
+			<CardActions disableSpacing style={styles.price}>
+				<Typography style={{textAlign: "left", fontSize: "x-large"}} variant="body1" gutterBottom>
 						${ product.price }
-					</Typography>
-					<Typography style={{marginLeft: "auto", fontSize: "x-large"}} variant="body1" gutterBottom>
-						<AddToCart product={{
-							id: product.id,
-							name: product.name,
-							price: product.price,
-							quantity: 1
-						}} />
-					</Typography>
-				</CardActions>
-
-				<Typography style={styles.description} variant="body1" gutterBottom>
-					{ product.description }
 				</Typography>
+				<Typography style={{marginLeft: "auto", fontSize: "x-large"}} variant="body1" gutterBottom>
+					<AddToCart product={{
+						id: product.id,
+						name: product.name,
+						price: product.price,
+						quantity: 1
+					}} />
+				</Typography>
+			</CardActions>
 
-				<ShareBar product={product} />
-			</CardContent>
-		</Card>
+			<Typography style={styles.description} variant="body1" gutterBottom>
+				{ product.description }
+			</Typography>
+		</div>
 	);
 };
 
@@ -65,8 +55,8 @@ const styles = {
 		textAlign: "justify",
 		maxWidth: "700px",
 		margin: "auto",
+		padding: "10px",
 		paddingTop: "20px",
-		paddingBottom: "10px",
 		fontFamily: "revert"
 	},
 	price: {

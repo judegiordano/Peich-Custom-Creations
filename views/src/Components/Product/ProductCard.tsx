@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
@@ -7,9 +7,11 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import IconButton from "@material-ui/core/IconButton";
 import Collapse from "@material-ui/core/Collapse";
 
-import { IProduct, IStyles, ICartProduct } from "../../Types/Abstract";
+import { IProduct, IStyles, ICartProduct, IGallery } from "../../Types/Abstract";
 import { ProductAction } from "./ProductAction";
 import { AddToCart } from "./ProductPage/AddToCart";
+import { ProductModal } from "./ProductModal";
+import { client } from "../../Api/Client";
 
 interface IProductCard {
 	styleProp?: IStyles
@@ -17,17 +19,32 @@ interface IProductCard {
 }
 
 export const ProductCard: React.FC<IProductCard> = ({ styleProp, product }: IProductCard): JSX.Element => {
-	
-	const [expanded, setExpanded] = useState(false);
 
-	const handleExpandClick = () => {
-		setExpanded(!expanded);
+	const [expanded, setExpanded] = useState(false);
+	const [modalOpen, setModalOpen] = useState(false);
+	const [gallery, setGallery] = useState([] as IGallery[]);
+
+	const handleClickOpen = () => setModalOpen(true);
+	const handleClose = () => setModalOpen(false);
+	const handleExpandClick = () => setExpanded(!expanded);
+
+	const getItem = async () => {
+		try {
+			const { data } = await client.get(`/products/${product.id}`);
+			setGallery(data.product.gallery);
+		} catch (error) {
+			console.log(error);
+		}
 	};
+	
+	useEffect(() => {
+		getItem();
+	}, []);
 
 	return (
 		<div style={{ ...styles.root, ...styleProp }}>
 			<Card>
-				<ProductAction product={product} />
+				<ProductAction product={product} onClick={handleClickOpen} />
 
 				<CardActions disableSpacing>
 					<AddToCart product={{
@@ -52,6 +69,8 @@ export const ProductCard: React.FC<IProductCard> = ({ styleProp, product }: IPro
 					</CardContent>
 				</Collapse>
 			</Card>
+
+			<ProductModal open={modalOpen} handleClose={handleClose} onClick={handleClose} product={product} gallery={gallery} />
 		</div>
 	);
 };

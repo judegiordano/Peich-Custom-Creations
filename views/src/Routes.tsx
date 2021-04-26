@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { NotFound } from "./Pages/NotFound";
 import { AllProductsPage } from "./Pages/AllProductsPage";
 import { Error } from "./Pages/Error";
-import { ProductPage } from "./Pages/ProductPage";
 import { CartPage } from "./Pages/CartPage";
 import { NavBar } from "./Components/Navigation/NavBar";
 import { ContactPage } from "./Pages/ContactPage";
@@ -35,7 +34,6 @@ export const Routes: React.FC<IRoutes> = ({cartCount}: IRoutes): JSX.Element => 
 				<NavBar cartCount={cartCount} />
 				<Switch>
 					<Route path="/" exact component={AllProductsPage} />
-					<Route path="/item/:id" component={ProductPage} />
 					<Route path="/cart" component={CartPage} />
 					<Route path="/contact" component={ContactPage} />
 					<Route path="/emailsuccess" component={ContactSuccesPage} />

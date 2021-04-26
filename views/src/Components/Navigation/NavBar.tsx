@@ -18,6 +18,7 @@ import Badge from "@material-ui/core/Badge";
 
 import { colors, config } from "../../Config/Config";
 import { Typography } from "@material-ui/core";
+import { useHistory } from "react-router";
 
 interface IStyles {
 	[key: string]: React.CSSProperties
@@ -31,6 +32,7 @@ interface INavBar {
 export const NavBar: React.FC<INavBar> = ({ styleProp, cartCount }: INavBar): JSX.Element => {
 
 	const [open, setOpen] = useState(false);
+	const history = useHistory();
 
 	const toggleDrawer = (open: boolean) => (
 		event: React.KeyboardEvent | React.MouseEvent,
@@ -47,23 +49,10 @@ export const NavBar: React.FC<INavBar> = ({ styleProp, cartCount }: INavBar): JS
 	};
 	const route = (to: string) => {
 		// might switch this back
-		// to history.push() as it 
 		// renders faster
-		window.location.href = to;
+		// window.location.href = to;
+		history.push(to);
 		setOpen(false);
-	};
-	const getPathname = () => {
-		const path = window.location.pathname;
-		switch (true) {
-		case /.*cart.*/.test(path):
-			return "Cart";
-		case /.*contact.*/.test(path):
-			return "Contact";
-		case /.*admin.*/.test(path):
-			return "Admin";
-		default:
-			return "Home";
-		}
 	};
 
 	return (
@@ -78,7 +67,7 @@ export const NavBar: React.FC<INavBar> = ({ styleProp, cartCount }: INavBar): JS
 						<MenuIcon />
 					</IconButton>
 					<Typography style={{flexGrow: 1, textAlign: "left", color:"black"}}>
-						{ getPathname() }
+						Peich Creations
 					</Typography>
 					<IconButton onClick={() => route("/cart")} >
 						<Badge badgeContent={cartCount} color="primary">
