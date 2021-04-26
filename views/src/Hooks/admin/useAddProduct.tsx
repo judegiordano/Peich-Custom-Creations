@@ -19,12 +19,14 @@ interface IUseAddProduct {
 	formData: IFormData,
 	submitAddProduct: (e: submit) => Promise<void>,
 	handleClose: () => void
-	handleOpen: () => void
+	handleOpen: () => void,
+	loading: boolean
 }
 
 export const useAddProduct = (): IUseAddProduct => {
 
 	const [newItemOpen, setNewItemOpen] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const { enqueueSnackbar } = useSnackbar();
 	const [formData, setFormData] = useState({
 		name: "",
@@ -40,6 +42,7 @@ export const useAddProduct = (): IUseAddProduct => {
 	const submitAddProduct = async (e: submit) => {
 		try {
 			e.preventDefault();
+			setLoading(true);
 			const fileData = new FormData();
 
 			fileData.append("name", formData.name);
@@ -56,8 +59,10 @@ export const useAddProduct = (): IUseAddProduct => {
 			
 			enqueueSnackbar("new item added successfully", { variant: "success"});
 			handleClose();
+			setLoading(false);
 		} catch (error) {
 			enqueueSnackbar("error adding item", { variant: "warning"});
+			setLoading(true);
 			console.log(error);
 		}
 	};
@@ -68,6 +73,7 @@ export const useAddProduct = (): IUseAddProduct => {
 		submitAddProduct,
 		handleClose,
 		handleOpen,
-		formData
+		formData,
+		loading
 	};
 };

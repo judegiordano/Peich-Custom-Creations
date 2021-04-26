@@ -159,4 +159,12 @@ export default class UserRepository {
 			throw Error(e);
 		}
 	}
+
+	public static async GetProductNames(): Promise<IProduct[]> {
+		try {
+			return await Product.find().select("id name -_id");
+		} catch (e) {
+			throw Error(e);
+		}
+	}
 }

@@ -28,7 +28,8 @@ export const AddNewItem: React.FC<IAddNewItem> = ({ styleProp }: IAddNewItem): J
 		setFormData,
 		submitAddProduct,
 		handleClose,
-		handleOpen} = useAddProduct();
+		loading,
+		handleOpen } = useAddProduct();
 
 	const buttonTypes = [
 		{
@@ -92,7 +93,7 @@ export const AddNewItem: React.FC<IAddNewItem> = ({ styleProp }: IAddNewItem): J
 						<Button onClick={handleClose} color="primary">
 							Cancel
 						</Button>
-						<Button type="submit" color="primary">
+						<Button type="submit" color="primary" disabled={loading}>
 							Confirm
 						</Button>
 					</DialogActions>

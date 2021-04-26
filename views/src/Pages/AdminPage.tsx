@@ -1,6 +1,7 @@
 import React from "react";
 import { Redirect } from "react-router";
 import { AddNewItem } from "../Components/Admin/AddNewItem";
+import { DeleteProduct } from "../Components/Admin/DeleteProduct";
 
 import { AppButton } from "../Components/AppButton";
 import { AppLoader } from "../Components/AppLoader";
@@ -28,6 +29,7 @@ export const AdminPage: React.FC<IAdminPage> = ({ styleProp, auth }: IAdminPage)
 			<div style={{ ...styles.root, ...styleProp }}>
 				<AppButton styleProp={styles.button as IStyles} text="logout" onClick={() => logout()} />
 				<AddNewItem />
+				<DeleteProduct />
 			</div>
 		)
 	);

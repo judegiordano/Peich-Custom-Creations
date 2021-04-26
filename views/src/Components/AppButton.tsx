@@ -12,6 +12,7 @@ interface IAppButton {
 	startIcon?: React.ReactNode,
 	endIcon?: React.ReactNode,
 	styleProp?: IStyles,
+	color?: "inherit" | "primary" | "secondary" | "default",
 	type? : "button" | "submit" | "reset"
 }
 
@@ -22,6 +23,7 @@ export const AppButton: React.FC<IAppButton> = ({
 	startIcon,
 	endIcon,
 	type,
+	color = "primary",
 	styleProp
 }: IAppButton): JSX.Element => {
 	return (
@@ -30,7 +32,7 @@ export const AppButton: React.FC<IAppButton> = ({
 				style={styles.button}
 				fullWidth
 				variant="outlined"
-				color="primary"
+				color={color}
 				disabled={disabled}
 				onClick={onClick}
 				startIcon={startIcon}

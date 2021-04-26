@@ -11,6 +11,19 @@ import Product from "../Repositories/ProductRepository";
 
 const router = Router();
 
+router.get("/productnames", async (req, res, next) => {
+	try {
+		const products = await Product.GetProductNames();
+
+		res.json({
+			ok: true,
+			products
+		});
+	} catch (error) {
+		next(error);
+	}
+});
+
 router.post("/login", async (req, res, next) => {
 	try {
 		const login = req.body as IAdmin;
@@ -89,6 +102,16 @@ router.post("/logout", Auth, async (req, res, next) => {
 		res.json({
 			ok: true,
 			data: "You have logged out"
+		});
+	} catch (error) {
+		next(error);
+	}
+});
+
+router.delete("/product/:id", Auth, async (req, res, next) => {
+	try {
+		res.json({
+			deleted: await Product.Delete(parseInt(req.params.id as string))
 		});
 	} catch (error) {
 		next(error);
