@@ -5,6 +5,7 @@ interface INewProduct {
 	name: string,
 	description: string,
 	photo: Buffer,
+	gallery?: Buffer[],
 	price: number
 }
 
@@ -13,12 +14,22 @@ export default class UserRepository {
 	public static async Insert(body: INewProduct): Promise<boolean> {
 		try {
 			const newProduct = new Product();
+
 			newProduct.id = await Utility.Increment("Product");
 			newProduct.name = body.name;
 			newProduct.description = body.description;
 			newProduct.photo = Buffer.from(body.photo).toString("base64");
 			newProduct.price = body.price;
-			newProduct.gallery = [];
+
+			if (body.gallery) {
+				body.gallery.forEach(item => {
+					newProduct.gallery.push({
+						uid: Utility.RandomUid(20),
+						photo: Buffer.from(item).toString("base64")
+					});
+				});
+			}
+			else newProduct.gallery = [];
 			newProduct.tags = [];
 			newProduct.isNew = true;
 

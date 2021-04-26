@@ -16,6 +16,7 @@ interface IProductImage {
 }
 
 export const ProductImage: React.FC<IProductImage> = ({ product, gallery }: IProductImage):JSX.Element => {
+
 	return (
 		<>
 			{

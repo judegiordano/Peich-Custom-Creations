@@ -1,5 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router";
+import { AddNewItem } from "../Components/Admin/AddNewItem";
 
 import { AppButton } from "../Components/AppButton";
 import { AppLoader } from "../Components/AppLoader";
@@ -18,15 +19,15 @@ export const AdminPage: React.FC<IAdminPage> = ({ styleProp, auth }: IAdminPage)
 
 	const { loading, logout } = useRefresh();
 
-	if(!auth) return <Redirect to="/admin/login" />;
+	if (!auth) return <Redirect to="/admin/login" />;
 
 	return (
 		loading ? (
-			<AppLoader  visible={true}/>
+			<AppLoader visible={true} />
 		) : (
-			<div style={{...styles.root, ...styleProp}}>
-					protected route
-				<AppButton styleProp={{maxWidth: "200px"} as IStyles} text="logout" onClick={() => logout()}/>
+			<div style={{ ...styles.root, ...styleProp }}>
+				<AppButton styleProp={styles.button as IStyles} text="logout" onClick={() => logout()} />
+				<AddNewItem />
 			</div>
 		)
 	);
@@ -34,6 +35,11 @@ export const AdminPage: React.FC<IAdminPage> = ({ styleProp, auth }: IAdminPage)
 
 const styles = {
 	root: {
+		margin: "auto",
+		padding: "10px",
 		textAlign: "center"
+	},
+	button: {
+		maxWidth: "200px"
 	}
 } as IStyles;

@@ -1,6 +1,6 @@
 import mongoose, { Document } from "mongoose";
 
-interface IGallery {
+export interface IGallery {
 	uid: string,
 	photo: string
 }

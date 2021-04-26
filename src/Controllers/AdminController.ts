@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { UploadedFile, FileArray } from "express-fileupload";
 
 import { IAdmin } from "../Models/Admin";
 import Jwt from "../Helpers/Jwt";
@@ -6,6 +7,7 @@ import Utility from "../Services/Utility";
 import Auth from "../Middleware/Auth";
 import config from "../Helpers/Config";
 import AdminRepository from "../Repositories/AdminRepository";
+import Product from "../Repositories/ProductRepository";
 
 const router = Router();
 
@@ -35,6 +37,38 @@ router.post("/refresh", Auth, async (req, res, next) => {
 			ok: true,
 			data: res.locals.user,
 			token: res.locals.newToken
+		});
+	} catch (error) {
+		next(error);
+	}
+});
+
+router.post("/addproduct", Auth, async (req, res, next) => {
+	try {
+		const { description, name, price } = req.body;
+		const { data } = req.files.picture as UploadedFile;
+
+		let buffers: Buffer[] = [];
+		for (const key in req.files) {
+			if (/.*gallery.*/.test(key)) {
+				const pics = req.files as FileArray;
+
+				const { data } = pics[key] as UploadedFile;
+				buffers.push(data);
+			}
+		}
+
+		const newProduct = await Product.Insert({
+			description,
+			name,
+			price,
+			photo: data,
+			gallery: buffers
+		});
+
+		res.json({
+			ok: newProduct,
+			data: "item inserted"
 		});
 	} catch (error) {
 		next(error);
